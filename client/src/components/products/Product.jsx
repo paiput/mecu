@@ -5,7 +5,7 @@ import handleService from '../../services/handlers';
 // borrar despues
 import emptyImg from './empty.jpg';
 
-export const Product = () => {
+export const Product = ({ product }) => {
   const [liked, setLiked] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
 
@@ -15,8 +15,8 @@ export const Product = () => {
         <img className="product__img" src={emptyImg} alt="..." />
       </div>
       <div className="product-info">
-        <p className="product__name">Nombre del producto</p>
-        <p className="product__price">$2,499</p>
+        <p className="product__name">{product.name}</p>
+        <p className="product__price">${product.price}</p>
         <div className="product__buttons-container">
           <button className="primary-button">Comprar ahora</button>
           <div className="icon-button-container">

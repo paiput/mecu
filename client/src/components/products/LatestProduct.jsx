@@ -1,9 +1,9 @@
 import { Product } from './Product';
 
-export const LatestProduct = () => {
+export const LatestProduct = ({ product }) => {
   return (
     <div className="latest-product">
-      <Product />
+      <Product product={product} />
     </div>
   )
 }

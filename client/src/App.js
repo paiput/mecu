@@ -14,8 +14,34 @@ const products = [
     img: null,
     price: 2499,
     quantity: 10
+  },
+  {
+    id: 2,
+    name: 'Pantalon',
+    description: 'Pantalon de jean',
+    img: null,
+    price: 1999,
+    quantity: 5
+  },
+  {
+    id: 3,
+    name: 'Gorra',
+    description: 'Gorra de beisbol',
+    img: null,
+    price: 800,
+    quantity: 11
+  },
+  {
+    id: 4,
+    name: 'Camiseta NBA',
+    description: 'Camiseta NBA de los Chicago Bulls',
+    img: null,
+    price: 9000,
+    quantity: 3
   }
 ]
+
+const randomProduct = products[Math.floor(Math.random() * products.length)];
 
 const App = () => {
   const [user, setUser] = useState(false);
@@ -23,8 +49,8 @@ const App = () => {
   return (
     <div className="App">
       <Header />
-      <FeaturedProduct />
-      <LatestProducts />
+      <FeaturedProduct product={randomProduct} />
+      <LatestProducts products={products} />
     </div>
   );
 }
