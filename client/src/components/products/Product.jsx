@@ -1,7 +1,7 @@
 // imports
 import { useState } from 'react';
 import * as Icon from 'react-bootstrap-icons';
-import productService from '../../services/product';
+import handleService from '../../services/handlers';
 // borrar despues
 import emptyImg from './empty.jpg';
 
@@ -20,14 +20,14 @@ export const Product = () => {
         <div className="product__buttons-container">
           <button className="primary-button">Comprar ahora</button>
           <div className="icon-button-container">
-            <button className="product-button" onClick={() => productService.handleChange(setLiked)}>
+            <button className="product-button" onClick={() => handleService.handleChange(setLiked)}>
               {
                 liked
                   ? <Icon.HeartFill className="icon big-icon heart" />
                   : <Icon.Heart className="icon big-icon heart" />
               }
             </button>
-            <button className="product-button" onClick={() => productService.handleChange(setAddedToCart)}>
+            <button className="product-button" onClick={() => handleService.handleChange(setAddedToCart)}>
               {
                 addedToCart 
                   ? <Icon.CartCheckFill className="icon big-icon" />
