@@ -20,14 +20,14 @@ export const Product = () => {
         <div className="product__buttons-container">
           <button className="primary-button">Comprar ahora</button>
           <div className="icon-button-container">
-            <button className="product-button" onClick={() => handleService.handleChange(setLiked)}>
+            <button className="product-button" onClick={() => handleService.handleClick(setLiked)}>
               {
                 liked
                   ? <Icon.HeartFill className="icon big-icon heart" />
                   : <Icon.Heart className="icon big-icon heart" />
               }
             </button>
-            <button className="product-button" onClick={() => handleService.handleChange(setAddedToCart)}>
+            <button className="product-button" onClick={() => handleService.handleClick(setAddedToCart)}>
               {
                 addedToCart 
                   ? <Icon.CartCheckFill className="icon big-icon" />

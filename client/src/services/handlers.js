@@ -1,7 +1,7 @@
-const handleChange = (stateFunc) => {
+const handleClick = (stateFunc) => {
   stateFunc(prevValue => !prevValue);
 }
 
-const exportableFunctions = { handleChange };
+const exportableFunctions = { handleClick };
 
 export default exportableFunctions;
