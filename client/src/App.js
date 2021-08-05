@@ -1,4 +1,9 @@
 // imports
+import { 
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from 'react-router-dom';
 import { useState } from 'react';
 import './App.css';
 // components
@@ -47,11 +52,17 @@ const App = () => {
   const [user, setUser] = useState(false);
 
   return (
-    <div className="App">
-      <Header />
-      <FeaturedProduct product={randomProduct} />
-      <LatestProducts products={products} />
-    </div>
+    <Router>
+      <div className="App">
+        <Header />
+        <Switch>
+          <Route exact path="/">
+            <FeaturedProduct product={randomProduct} />
+            <LatestProducts products={products} />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
