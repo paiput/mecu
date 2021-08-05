@@ -102,6 +102,18 @@ button > .icon {
 }
 /* /Header */
 
+/* Hamb-Menu */
+.hamb-menu {
+  background-color: #FFF;
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  padding: var(--default-spacing) 1rem;
+  position: absolute;
+  width: 100%;
+}
+/* /Hamb-Menu */
+
 /* Products-Generals */
 .product-card {
   background-color: #FFF;
