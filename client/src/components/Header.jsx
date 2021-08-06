@@ -1,16 +1,11 @@
 // imports
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import handleService from '../services/handlers';
 import * as Icon from 'react-bootstrap-icons';
 // components
 import { HambMenu } from './HambMenu';
 
-export const Header = () => {
-  const [hambMenu, setHambMenu] = useState(false);
-
-  const handelHambClick = (e) => {
-    setHambMenu(prevValue => !prevValue);
-  }
+export const Header = ({ hambMenu, setHambMenu }) => {
 
   return (
     <>
@@ -26,10 +21,10 @@ export const Header = () => {
             <input type="text" placeholder="Buscar productos..."></input>
           </form>
           <div className="tools-container">
-            <div className="nav__hamburger" onClick={handelHambClick}>
-              <div></div>
-              <div></div>
-              <div></div>
+            <div className="nav__hamburger" onClick={() => handleService.handleHambMenuClick(setHambMenu)}>
+              <div className="nav__hamburger-child"></div>
+              <div className="nav__hamburger-child"></div>
+              <div className="nav__hamburger-child"></div>
             </div>
             <button className="cart-button">
               <Icon.Cart className="icon big-icon" />
@@ -37,7 +32,7 @@ export const Header = () => {
           </div>
         </nav>
       </header>
-      { hambMenu ? <HambMenu /> : '' }
+      { hambMenu && <HambMenu /> }
     </>
   )
 }

@@ -7,6 +7,7 @@ import {
 import { useState, useEffect } from 'react';
 import './App.css';
 import productService from './services/products';
+import handleService from './services/handlers';
 // components
 import { Header } from './components/Header';
 import { FeaturedProduct } from './components/products/FeaturedProduct';
@@ -16,23 +17,24 @@ import { SellForm } from './components/user/SellForm';
 
 const App = () => {
   const [products, setProducts] = useState([]);
+  const [randomProduct, setRandomProduct] = useState({});
   const [loading, setLoading] = useState(true);
-
-  const randomProduct = products[Math.floor(Math.random() * products.length)];
+  const [hambMenu, setHambMenu] = useState(false);
 
   useEffect(() => {
     productService.getAll()
       .then(fetchedProducts => {
         console.log('Products fetched');
         setProducts(fetchedProducts);
+        setRandomProduct(fetchedProducts[Math.floor(Math.random() * fetchedProducts.length)]);
         setLoading(false);
       })
   }, []);
 
   return (
     <Router>
-      <div className="App">
-        <Header />
+      <div className="App" onClick={(e) => handleService.handleClickOutsideHambMenu(e, setHambMenu)}>
+        <Header hambMenu={hambMenu} setHambMenu={setHambMenu} />
         <Switch>
           <Route exact path="/">
             {
