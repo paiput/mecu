@@ -1,5 +1,6 @@
 // imports
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import * as Icon from 'react-bootstrap-icons';
 // components
 import { HambMenu } from './HambMenu';
@@ -14,7 +15,11 @@ export const Header = () => {
   return (
     <>
       <header className="header">
-        <p>Mecu</p>
+        <p className="header__logo">
+          <Link to="/">
+            Mecu
+          </Link>
+        </p>
         <nav className="nav">
           <form className="search-bar">
             <button type="submit"><Icon.Search className="icon normal-icon" /></button>
