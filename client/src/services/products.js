@@ -7,6 +7,11 @@ const getAll = () => {
   return request.then(res => res.data);
 }
 
-const exportableFunctions = { getAll };
+const getProduct = id => {
+  const request = axios.get(`${baseUrl}/${id}`);
+  return request.then(res => res.data);
+}
+
+const exportableFunctions = { getAll, getProduct };
 
 export default exportableFunctions;
