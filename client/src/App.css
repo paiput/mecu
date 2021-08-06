@@ -44,6 +44,12 @@ button > .icon {
   display: flex;
   gap: 1rem;
   padding: 1rem var(--default-spacing);
+  position: relative;
+}
+
+.header__logo {
+  cursor: pointer;
+  user-select: none;
 }
 
 .nav {
