@@ -8,7 +8,7 @@ export const LatestProducts = ({ products }) => {
       </div>
       <div className="latest-products-container">
         {
-          products.map(product => <LatestProduct key={product.id} product={product} />)
+          products.map(product => <LatestProduct key={product._id} product={product} />)
         }
       </div>
     </div>

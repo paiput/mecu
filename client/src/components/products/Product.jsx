@@ -1,5 +1,6 @@
 // imports
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import * as Icon from 'react-bootstrap-icons';
 import handleService from '../../services/handlers';
 // borrar despues
@@ -12,7 +13,9 @@ export const Product = ({ product }) => {
   return (
     <>
       <div className="product__img-container">
-        <img className="product__img" src={emptyImg} alt="..." />
+        <Link to={`/products/${product._id}`}>
+          <img className="product__img" src={emptyImg} alt="..." />
+        </Link>
       </div>
       <div className="product-info">
         <p className="product__name">{product.name}</p>
