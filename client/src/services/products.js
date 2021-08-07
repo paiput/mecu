@@ -12,6 +12,11 @@ const getProduct = id => {
   return request.then(res => res.data);
 }
 
-const exportableFunctions = { getAll, getProduct };
+const postProduct = product => {
+  const request = axios.post(baseUrl, product);
+  return request.then(res => res.data);
+}
+
+const exportableFunctions = { getAll, getProduct, postProduct };
 
 export default exportableFunctions;
