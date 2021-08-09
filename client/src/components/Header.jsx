@@ -21,7 +21,7 @@ export const Header = ({ hambMenu, setHambMenu }) => {
             <input type="text" placeholder="Buscar productos..."></input>
           </form>
           <div className="tools-container">
-            <div className="nav__hamburger" onClick={() => handleService.handleHambMenuClick(setHambMenu)}>
+            <div className={`nav__hamburger ${hambMenu ? 'change-to-cross' : ''}`} onClick={() => handleService.handleHambMenuClick(setHambMenu)} >
               <div className="nav__hamburger-child"></div>
               <div className="nav__hamburger-child"></div>
               <div className="nav__hamburger-child"></div>
