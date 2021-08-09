@@ -12,7 +12,7 @@ export const Header = ({ hambMenu, setHambMenu }) => {
       <header className="header">
         <p className="header__logo">
           <Link to="/">
-            Mecu
+            <Icon.House className="icon big-icon"/>
           </Link>
         </p>
         <nav className="nav">
