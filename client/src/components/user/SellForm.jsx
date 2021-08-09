@@ -1,0 +1,120 @@
+import { useForm } from 'react-hook-form';
+import productService from '../../services/products';
+import * as Icon from 'react-bootstrap-icons';
+
+const InputError = ({ msg }) => {
+  return(
+    <small style={{display: 'block', color: 'gray'}} className="input-error">
+      <Icon.ExclamationCircle /> {msg}
+    </small>
+  )
+}
+
+export const SellForm = () => {
+  const { register, handleSubmit, formState: { errors }, reset } = useForm();
+
+  const filterBadInputs = (e) => {
+    let inputValue = e.currentTarget.value;
+    if (inputValue.includes("  ")) {
+      inputValue = inputValue.replace(/\s\s/g, " ");
+    }
+    if (inputValue.includes(" ")) {
+      inputValue = inputValue.replace(/^\s/g, "");
+    }
+    if (inputValue.includes("\n")) {
+      inputValue = inputValue.replace(/\n\n\n/g, "\n");
+    }
+    if (inputValue.includes("\n")) {
+      inputValue = inputValue.replace(/^\n/g, "");
+    }
+  }
+
+  // filter ascii characters that are not numbers
+  const filterNotNumbers = (e) => {
+    if (e.which < 48 || e.which > 57) e.preventDefault();
+  }
+
+  const onSubmit = data => {
+    productService.postProduct(data)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        alert('Lo sentimos, el producto no pudo ser publicado');
+        console.log('Error on POST:', error);
+      })
+    reset();
+  }
+
+  return (
+    <div className="sell-form-container">
+      {/* handleSubmit validates the inputs before invoking onSubmit */}
+      <form className="sell-form" onSubmit={handleSubmit(onSubmit)}>
+        <div className="sell-form__input-container">
+          <label htmlFor="name">Producto:</label>
+          <input 
+            type="text"
+            id="input__product-name"
+            onKeyPress={filterBadInputs}
+            {...register("name", { 
+              required: true, 
+              minLength: 4, 
+              maxLength: 25
+            })}
+          />
+          {errors.name?.type === 'required' && <InputError msg="Este campo es requerido" />}
+          {errors.name?.type === 'minLength' && <InputError msg="No supera el mínimo de caracteres requeridos" />}
+          {errors.name?.type === 'maxLength' && <InputError msg="Supera el límite de caracteres" />}
+        </div>
+        <div className="sell-form__input-container">
+          <label htmlFor="description">Descripción:</label>
+          <textarea
+            id="input__product-description"
+            onKeyPress={filterBadInputs}
+            {...register("description", { 
+              required: true, 
+              minLength: 35, 
+              maxLength: 750 
+            })}
+          />
+          {errors.description?.type === 'required' && <InputError msg="Este campo es requerido" />}
+          {errors.description?.type === 'minLength' && <InputError msg="No supera el mínimo de caracteres requeridos" />}
+          {errors.description?.type === 'maxLength' && <InputError msg="Supera el límite de caracteres" />}
+        </div>
+        <div className="sell-form__input-container">
+          <label htmlFor="price">Precio:$</label>
+          <input 
+            type="number"
+            id="input__product-price"
+            onKeyPress={filterNotNumbers}
+            {...register("price", { 
+              required: true,
+              min: 1, 
+              max: 9999999
+            })}
+          />
+          {errors.price?.type === 'required' && <InputError msg="Este campo es requerido" />}
+          {errors.price?.type === 'min' && <InputError msg="No supera el precio mínimo" />}
+          {errors.price?.type === 'max' && <InputError msg="Supera el precio máximo" />}
+        </div>
+        <div className="sell-form__input-container">
+          <label htmlFor="quantity">Cantidad:</label>
+          <input 
+            type="number"
+            id="input__product-quantity"
+            onKeyPress={filterNotNumbers}
+            {...register("quantity", { 
+              required: true, 
+              min: 1, 
+              max: 10000 
+            })}
+          />
+          {errors.quantity?.type === 'required' && <InputError msg="Este campo es requerido" />}
+          {errors.quantity?.type === 'min' && <InputError msg="No se puede cargar menos de una unidad" />}
+          {errors.quantity?.type === 'max' && <InputError msg="Supera la cantidad máxima de unidades que se pueden publicar" />}
+        </div>
+        <button className="primary-button" type="submit">Publicar</button>
+      </form>
+    </div>
+  )
+}
