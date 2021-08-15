@@ -59,7 +59,7 @@ export const SellForm = () => {
             {...register("name", { 
               required: true, 
               minLength: 4, 
-              maxLength: 25
+              maxLength: 35
             })}
           />
           {errors.name?.type === 'required' && <InputError msg="Este campo es requerido" />}
