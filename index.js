@@ -12,12 +12,13 @@ app.use(express.json());
 const db = 'mongodb://localhost/mecu-db';
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
   .then(() => {
-    console.log('Connected succesfully to', db);
+    console.log('Connected succesfully to db');
   })
   .catch(err => {
     console.log('Connection error:', err);
   });
 
+app.use('/api', require('./api/routes/users'));
 app.use('/api', require('./api/routes/products'));
 
 app.get('/', (req,res) => {
