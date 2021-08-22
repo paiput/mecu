@@ -18,6 +18,7 @@ Router.get('/products', (req, res) => {
 
 Router.get('/products/:id', (req, res) => {
   Product.findById(req.params.id)
+    .populate('user')
     .exec((err, product) => {
       if (err) {
         console.log('Error finding product:', err);
