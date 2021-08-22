@@ -3,6 +3,9 @@ const cors = require('cors');
 const morgan = require('morgan');
 const express = require('express');
 
+const session = require('express-session'); // desde la version 1.5 cookie-parser ya no es necesario
+const passport = require('passport');
+
 const app = express();
 
 app.use(cors());
@@ -18,12 +21,14 @@ mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useFindA
     console.log('Connection error:', err);
   });
 
+// passport
+app.use(session({ secret: 'secret', resave: true, saveUninitialized: true }))
+app.use(passport.initialize());
+app.use(passport.session());
+require('./api/passportConfig')(passport);
+
 app.use('/api', require('./api/routes/users'));
 app.use('/api', require('./api/routes/products'));
-
-app.get('/', (req,res) => {
-  res.send('<h1>Hola</h1>');
-});
 
 const PORT = 3001;
 app.listen(PORT, () => {
