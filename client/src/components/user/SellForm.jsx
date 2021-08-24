@@ -1,6 +1,9 @@
 import { useForm } from 'react-hook-form';
 import productService from '../../services/products';
 import * as Icon from 'react-bootstrap-icons';
+// UserContext
+import { useContext } from 'react';
+import { UserContext } from '../../contexts/UserContext';
 
 const InputError = ({ msg }) => {
   return(
@@ -11,6 +14,7 @@ const InputError = ({ msg }) => {
 }
 
 export const SellForm = () => {
+  const { user: loggedUser } = useContext(UserContext);
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
   const filterBadInputs = (e) => {
@@ -23,32 +27,31 @@ export const SellForm = () => {
     }
     if (inputValue.includes("\n")) {
       inputValue = inputValue.replace(/\n\n\n/g, "\n");
-    }
-    if (inputValue.includes("\n")) {
       inputValue = inputValue.replace(/^\n/g, "");
     }
   }
 
-  // filter ascii characters that are not numbers
+  // filtra caracteres que no sean numeros
   const filterNotNumbers = (e) => {
     if (e.which < 48 || e.which > 57) e.preventDefault();
   }
 
   const onSubmit = data => {
-    productService.postProduct(data)
-      .then(response => {
-        console.log(response);
+    const product = {...data, username: loggedUser.username} // algo anda mal
+    productService.postProduct(product)
+      .then(product => {
+        console.log('Product published:', product);
       })
-      .catch(error => {
+      .catch(err => {
         alert('Lo sentimos, el producto no pudo ser publicado');
-        console.log('Error on POST:', error);
+        console.log('Error on POST:', err);
       })
     reset();
   }
 
   return (
     <div className="sell-form-container">
-      {/* handleSubmit validates the inputs before invoking onSubmit */}
+      {/* handleSubmit valida los inputes antes de invocar a la funcion onSubmit */}
       <form className="sell-form" onSubmit={handleSubmit(onSubmit)}>
         <div className="sell-form__input-container">
           <label htmlFor="name">Producto:</label>
