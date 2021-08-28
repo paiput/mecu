@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
 import loginService from '../../services/login';
 // UserContext
 import { useContext } from 'react';
@@ -28,6 +29,7 @@ export const LoginForm = () => {
   const renderLogInForm = () => {
     return (
       <form onSubmit={handleSubmit(onSubmit)} className="login-form">
+        <h2 className="form-title">Iniciar sesión</h2>
         <div className="login-form__input-container">
           <input 
             type="text"
@@ -49,6 +51,7 @@ export const LoginForm = () => {
           {errors.password?.type === 'required' && <small>Este campo es requerido</small>}
         </div>
         <button type="submit" className="primary-button">Iniciar sesión</button>
+        <Link to="/signup" className="form-link">Aún no tengo cuenta</Link>
       </form>
     )
   }
