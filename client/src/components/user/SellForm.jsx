@@ -37,7 +37,7 @@ export const SellForm = () => {
   }
 
   const onSubmit = data => {
-    const product = {...data, username: loggedUser.username} // algo anda mal
+    const product = {...data, username: loggedUser.username}
     productService.postProduct(product)
       .then(product => {
         console.log('Product published:', product);
