@@ -82,7 +82,7 @@ Router.post('/login', (req, res, next) => {
 
 // devuelve el usuario una vez iniciada la sesion
 Router.get('/user', (req, res) => {
-  res.send(req.user); // req.user guarda todos los datos del usuario que inicia sesion
+  res.json(req.user); // req.user guarda todos los datos del usuario que inicia sesion
 });
 
 // borrar despues
