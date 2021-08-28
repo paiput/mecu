@@ -6,7 +6,9 @@ const User = require('../models/User');
 
 Router.get('/products', (req, res) => {
   Product.find({})
-    .populate('user')
+    .populate('user', {
+      products: false
+    })
     .exec((err, products) => {
       if (err) { 
         console.log('Error finding products:', err).end(); 
@@ -19,12 +21,20 @@ Router.get('/products', (req, res) => {
 Router.get('/products/:id', (req, res) => {
   Product.findById(req.params.id)
     .populate('user')
-    .exec((err, product) => {
+    .exec(async (err, product) => {
       if (err) {
         console.log('Error finding product:', err);
         res.end();
       }
       if (!product) res.status(404).json({ msg: 'Not found' });
+
+      const user = await User.findOne({ username: product.user.username }).populate('products');
+      
+      // el toString() es porque userProduct._id se devuelve como ObjectId
+      user.products = user.products.filter(userProduct => userProduct._id.toString() !== req.params.id); 
+      
+      product.user = user;
+
       res.status(200).json(product);
     });
 });
@@ -49,7 +59,7 @@ Router.post('/products', async (req, res) => {
       console.log('Error saving product:', err);
       res.end();
     }
-    user.products = user.products.concat(savedProduct._id);
+    user.products = user.products.concat(savedProduct); // removi el ._id a ver q pasa
     await user.save();
     res.status(201).json(savedProduct);
   });
