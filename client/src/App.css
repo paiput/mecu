@@ -151,19 +151,7 @@ a {
 /* /Hamb-Menu */
 
 /* Form-Generals */
-.form-link {
-  color: #1900ff;
-  text-decoration: underline;
-  font-size: .75rem;
-}
-/* /Form-Generals */
-
-/* Login-Form */
-.login-form__container {
-  height: calc(100vh - 64px);
-}
-
-.login-form {
+.form-container {
   align-items: center;
   background-color: #FFF;
   border-radius: .125rem;
@@ -171,21 +159,20 @@ a {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  height: 40%;
   justify-content: center;
   left: 50%;
-  padding: 1rem var(--default-spacing);
+  padding: 1.5rem var(--default-spacing);
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
   width: 85%;
 }
 
-.login-form__input-container {
+.form-container__input-container {
   width: 90%;
 }
 
-.login-form input {
+.form-container input {
   border: 2px solid var(--very-light-gray);
   border-bottom: none;
   border-radius: .175rem;
@@ -195,11 +182,37 @@ a {
   width: 100%;
 }
 
-.login-form button[type="submit"] {
+.form-container button[type="submit"] {
   margin-top: .5em;
   width: 90%;
 }
-/* /Login-Form */
+
+.form-link {
+  color: #1900ff;
+  text-decoration: underline;
+  font-size: .75rem;
+}
+
+.input-msg-container {
+  align-items: center;
+  color: var(--gray);
+  display: flex;
+  font-size: .9rem;
+  gap: .25rem;
+  margin-top: .5rem;
+}
+
+.password-input-container {
+  position: relative;
+}
+
+.password-input-eye {
+  color: var(--black);
+  position: absolute;
+  top: 50%;
+  transform: translate(-125%, calc(-50% + 2px));
+}
+/* /Form-Generals */
 
 /* Products-Generals */
 .product-card {
