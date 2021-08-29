@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
@@ -5,10 +6,14 @@ import loginService from '../../services/login';
 // UserContext
 import { useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
+// components
+import { InputMsg } from './InputMsg';
+import { PasswordEye } from './PasswordEye';
 
 export const LoginForm = () => {
   const { user, setUser } = useContext(UserContext);
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
+  const [isPasswordHidden, setIsPasswordHidden] = useState(true);
 
   const onSubmit = data => {
     const { username, password } = data;
@@ -28,9 +33,9 @@ export const LoginForm = () => {
 
   const renderLogInForm = () => {
     return (
-      <form onSubmit={handleSubmit(onSubmit)} className="login-form">
+      <form onSubmit={handleSubmit(onSubmit)} className="form-container login-form">
         <h2 className="form-title">Iniciar sesión</h2>
-        <div className="login-form__input-container">
+        <div className="form-container__input-container">
           <input 
             type="text"
             placeholder="Usuario"
@@ -38,20 +43,23 @@ export const LoginForm = () => {
               required: true
             })}
           />
-          {errors.username?.type === 'required' && <small>Este campo es requerido</small>}
+          {errors.username?.type === 'required' && <InputMsg msg="Este campo es requerido" />}
         </div>
-        <div className="login-form__input-container">
-          <input 
-            type="text"
-            placeholder="Contraseña"
-            {...register("password", { 
-              required: true
-            })}
-          />
-          {errors.password?.type === 'required' && <small>Este campo es requerido</small>}
+        <div className="form-container__input-container">
+          <div className="password-input-container">
+            <input 
+              type={ isPasswordHidden ? "password" : "text" }
+              placeholder="Contraseña"
+              {...register("password", { 
+                required: true
+              })}
+            />
+            <PasswordEye isPasswordHidden={isPasswordHidden} setIsPasswordHidden={setIsPasswordHidden} />
+          </div>
+          {errors.password?.type === 'required' && <InputMsg msg="Este campo es requerido" />}
         </div>
         <button type="submit" className="primary-button">Iniciar sesión</button>
-        <Link to="/signup" className="form-link">Aún no tengo cuenta</Link>
+        <Link to="/register" className="form-link">Aún no tengo cuenta</Link>
       </form>
     )
   }
