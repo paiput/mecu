@@ -16,6 +16,7 @@ import { FeaturedProduct } from './components/products/FeaturedProduct';
 import { LatestProducts } from './components/products/LatestProducts';
 import { ProductDetails } from './components/products/ProductDetails';
 import { SellForm } from './components/user/SellForm';
+import { RegisterForm } from './components/user/RegisterForm';
 import { LoginForm } from './components/user/LoginForm';
 
 const App = () => {
@@ -71,6 +72,9 @@ const App = () => {
             </Route>
             <Route path="/sell">
               <SellForm />
+            </Route>
+            <Route path="/register">
+              <RegisterForm />
             </Route>
             <Route path="/login">
               <LoginForm />
