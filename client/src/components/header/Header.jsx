@@ -1,6 +1,6 @@
 // imports
 import { Link } from 'react-router-dom';
-import handleService from '../services/handlers';
+import handleService from '../../services/handlers';
 import * as Icon from 'react-bootstrap-icons';
 // components
 import { HambMenu } from './HambMenu';
