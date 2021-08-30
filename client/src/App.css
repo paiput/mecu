@@ -1,6 +1,7 @@
 :root {
   /* Colors */
   --blue: #339AF0;
+  --very-light-blue: #ECF3FC;
   --black: #333;
   --gray: #888;
   --light-gray: #BBB;
@@ -260,11 +261,11 @@ a {
   padding: .5em .25em;
 }
 .secondary-button {
-  background-color: var(--very-light-gray);
-  border: 2px solid var(--gray);
+  background-color: var(--very-light-blue);
+  border: none;
   border-radius: 5px;
-  color: var(--gray);
-  padding: .4em .25em;
+  color: var(--blue);
+  padding: .5em .25em;
 }
 .product-button {
   background: none;
