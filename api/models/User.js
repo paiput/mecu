@@ -5,6 +5,15 @@ const UserSchema = new Schema({
   name: { type: String, required: true },
   surname: { type: String, required: true },
   passwordHash: { type: String, required: true }, 
+  balance: { type: Number, default: 0 },
+  likedProducts: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Product'
+  }],
+  purchasedProducts: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Product'
+  }],
   products: [{
     type: Schema.Types.ObjectId,
     ref: 'Product'
