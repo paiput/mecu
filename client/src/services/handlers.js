@@ -1,9 +1,5 @@
-const handleClick = (stateFunc) => {
-  stateFunc(prevValue => !prevValue);
-}
-
-const handleHambMenuClick = (stateFunc) => {
-  stateFunc(prevValue => !prevValue);
+const handleClick = (setState) => {
+  setState(prevValue => !prevValue);
 }
 
 const handleClickOutsideHambMenu = (e, setHambMenu) => {
@@ -13,6 +9,13 @@ const handleClickOutsideHambMenu = (e, setHambMenu) => {
     ) setHambMenu(false);
 }
 
-const exportableFunctions = { handleClick, handleHambMenuClick, handleClickOutsideHambMenu };
+const handleClickOutsideCartContainer = (e, setCartContainer) => {
+  const targetClasslist = e.target.classList;
+  if (!targetClasslist.contains('cart-button') && 
+      !e.target.parentElement.classList.contains('cart-button')
+    ) setCartContainer(false);
+}
+
+const exportableFunctions = { handleClick, handleClickOutsideHambMenu, handleClickOutsideCartContainer };
 
 export default exportableFunctions;
