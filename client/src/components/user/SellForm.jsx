@@ -1,17 +1,10 @@
 import { useForm } from 'react-hook-form';
 import productService from '../../services/products';
-import * as Icon from 'react-bootstrap-icons';
+// components
+import { InputMsg } from './InputMsg';
 // UserContext
 import { useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
-
-const InputError = ({ msg }) => {
-  return(
-    <small style={{display: 'block', color: 'gray'}} className="input-error">
-      <Icon.ExclamationCircle /> {msg}
-    </small>
-  )
-}
 
 export const SellForm = () => {
   const { user: loggedUser } = useContext(UserContext);
@@ -65,9 +58,9 @@ export const SellForm = () => {
               maxLength: 35
             })}
           />
-          {errors.name?.type === 'required' && <InputError msg="Este campo es requerido" />}
-          {errors.name?.type === 'minLength' && <InputError msg="No supera el mínimo de caracteres requeridos" />}
-          {errors.name?.type === 'maxLength' && <InputError msg="Supera el límite de caracteres" />}
+          {errors.name?.type === 'required' && <InputMsg msg="Este campo es requerido" />}
+          {errors.name?.type === 'minLength' && <InputMsg msg="No supera el mínimo de caracteres requeridos" />}
+          {errors.name?.type === 'maxLength' && <InputMsg msg="Supera el límite de caracteres" />}
         </div>
         <div className="sell-form__input-container">
           <label htmlFor="description">Descripción:</label>
@@ -80,9 +73,9 @@ export const SellForm = () => {
               maxLength: 750 
             })}
           />
-          {errors.description?.type === 'required' && <InputError msg="Este campo es requerido" />}
-          {errors.description?.type === 'minLength' && <InputError msg="No supera el mínimo de caracteres requeridos" />}
-          {errors.description?.type === 'maxLength' && <InputError msg="Supera el límite de caracteres" />}
+          {errors.description?.type === 'required' && <InputMsg msg="Este campo es requerido" />}
+          {errors.description?.type === 'minLength' && <InputMsg msg="No supera el mínimo de caracteres requeridos" />}
+          {errors.description?.type === 'maxLength' && <InputMsg msg="Supera el límite de caracteres" />}
         </div>
         <div className="sell-form__input-container">
           <label htmlFor="price">Precio:$</label>
@@ -96,9 +89,9 @@ export const SellForm = () => {
               max: 9999999
             })}
           />
-          {errors.price?.type === 'required' && <InputError msg="Este campo es requerido" />}
-          {errors.price?.type === 'min' && <InputError msg="No supera el precio mínimo" />}
-          {errors.price?.type === 'max' && <InputError msg="Supera el precio máximo" />}
+          {errors.price?.type === 'required' && <InputMsg msg="Este campo es requerido" />}
+          {errors.price?.type === 'min' && <InputMsg msg="No supera el precio mínimo" />}
+          {errors.price?.type === 'max' && <InputMsg msg="Supera el precio máximo" />}
         </div>
         <div className="sell-form__input-container">
           <label htmlFor="quantity">Cantidad:</label>
@@ -112,9 +105,9 @@ export const SellForm = () => {
               max: 10000 
             })}
           />
-          {errors.quantity?.type === 'required' && <InputError msg="Este campo es requerido" />}
-          {errors.quantity?.type === 'min' && <InputError msg="No se puede cargar menos de una unidad" />}
-          {errors.quantity?.type === 'max' && <InputError msg="Supera la cantidad máxima de unidades que se pueden publicar" />}
+          {errors.quantity?.type === 'required' && <InputMsg msg="Este campo es requerido" />}
+          {errors.quantity?.type === 'min' && <InputMsg msg="No se puede cargar menos de una unidad" />}
+          {errors.quantity?.type === 'max' && <InputMsg msg="Supera la cantidad máxima de unidades que se pueden publicar" />}
         </div>
         <button className="primary-button" type="submit">Publicar</button>
       </form>
