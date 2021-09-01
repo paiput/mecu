@@ -1,14 +1,23 @@
 // imports
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import * as Icon from 'react-bootstrap-icons';
-import handleService from '../../services/handlers';
 // borrar despues
 import emptyImg from './empty.jpg';
+import { CartContext } from '../../contexts/CartContext';
 
 export const Product = ({ product }) => {
-  const [liked, setLiked] = useState(false);
-  const [addedToCart, setAddedToCart] = useState(false);
+  const [liked, setLiked] = useState(false); // crear funcionalidad para los likes
+  const { cart, setCart } = useContext(CartContext);
+
+  const handleCartClick = () => {
+    if (cart.includes(product)) {
+      setCart(cartProducts => cartProducts.filter(cartProduct => cartProduct._id !== product._id)); 
+    } 
+    else {
+      setCart(cartProducts => cartProducts.concat(product)); // le agrega el producto que esta recibiendo como prop
+    } 
+  }
 
   return (
     <>
@@ -23,16 +32,16 @@ export const Product = ({ product }) => {
         <div className="product__buttons-container">
           <button className="primary-button">Comprar ahora</button>
           <div className="icon-button-container">
-            <button className="product-button" onClick={() => handleService.handleClick(setLiked)}>
+            <button className="product-button" >
               {
                 liked
                   ? <Icon.HeartFill className="icon big-icon heart" />
                   : <Icon.Heart className="icon big-icon heart" />
               }
             </button>
-            <button className="product-button" onClick={() => handleService.handleClick(setAddedToCart)}>
+            <button className="product-button" onClick={handleCartClick}>
               {
-                addedToCart 
+                cart.includes(product) 
                   ? <Icon.CartCheckFill className="icon big-icon" />
                   : <Icon.CartPlus className="icon big-icon" />
               }
