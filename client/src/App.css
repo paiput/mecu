@@ -171,6 +171,9 @@ a {
 .cart-container {
   background-color: #FFF;
   padding: 1rem;
+  position: absolute;
+  right: 0;
+  width: 50%;
 }
 
 .cart__products-container {
@@ -353,6 +356,30 @@ a {
   gap: .5rem;
 }
 /* /Product-Details */
+
+/* User-Account */
+/* .user-container {} */
+.user__profile {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  padding: 2rem;
+}
+.user__img-container {
+  text-align: center;
+}
+.user__img {
+  width: 50%;
+  border-radius: 50%;
+}
+
+.user__link {
+  display: block; /* mejorar despues */
+  margin: .5em 0;
+  color: blue;
+}
+/* /User-Account */
 
 /* Sell-Form */
 .sell-form-container {
