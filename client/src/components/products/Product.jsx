@@ -5,18 +5,25 @@ import * as Icon from 'react-bootstrap-icons';
 // borrar despues
 import emptyImg from './empty.jpg';
 import { CartContext } from '../../contexts/CartContext';
+import { UserContext } from '../../contexts/UserContext';
 
 export const Product = ({ product }) => {
   const [liked, setLiked] = useState(false); // crear funcionalidad para los likes
+  const { user } = useContext(UserContext);
   const { cart, setCart } = useContext(CartContext);
 
   const handleCartClick = () => {
-    if (cart.includes(product)) {
-      setCart(cartProducts => cartProducts.filter(cartProduct => cartProduct._id !== product._id)); 
+    if (user) {
+      if (cart.includes(product)) {
+        setCart(cartProducts => cartProducts.filter(cartProduct => cartProduct._id !== product._id)); 
+      } 
+      else {
+        setCart(cartProducts => cartProducts.concat(product)); // le agrega el producto que esta recibiendo como prop
+      } 
     } 
     else {
-      setCart(cartProducts => cartProducts.concat(product)); // le agrega el producto que esta recibiendo como prop
-    } 
+      alert('Iniciá sesión para guardar productos en el carrito');
+    }
   }
 
   return (
