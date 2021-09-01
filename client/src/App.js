@@ -20,6 +20,8 @@ import { SellForm } from './components/user/SellForm';
 import { RegisterForm } from './components/user/RegisterForm';
 import { LoginForm } from './components/user/LoginForm';
 import { Account } from './components/user/Account';
+import { PublishedProducts } from './components/user/PublishedProducts';
+import { Balance } from './components/user/Balance';
 
 const App = () => {
   const [user, setUser] = useState(null); // estado global del usuario
@@ -91,8 +93,14 @@ const App = () => {
               <Route path="/login">
                 <LoginForm />
               </Route>
-              <Route path="/account">
+              <Route exact path="/account">
                 <Account />
+              </Route>
+              <Route path="/account/balance">
+                <Balance />
+              </Route>
+              <Route path="/account/publishedproducts">
+                <PublishedProducts />
               </Route>
               <Route path="/">
                 <h2>Not found</h2>
