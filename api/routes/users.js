@@ -82,7 +82,41 @@ Router.post('/login', (req, res, next) => {
 
 // devuelve el usuario una vez iniciada la sesion
 Router.get('/user', (req, res) => {
-  res.json(req.user); // req.user guarda todos los datos del usuario que inicia sesion
+  // req.user guarda todos los datos del usuario que inicia sesion
+  User.findOne({ username: req.user.username }) 
+    .populate('products', {
+      user: false // no devuelve el id del usuario por cada producto
+    })
+    .exec((err, user) => {
+      if (err) { 
+        console.log('Error finding logged user:', err).end(); 
+        res.status(500).send('Could not find logged user');
+      }
+      res.status(200).json(user);
+    });
+});
+
+// update del saldo de un usuario
+Router.put('/users/:username', (req, res) => {
+  const { amountToLoad } = req.body;
+
+  User.findOne({ username: req.params.username })
+    .exec((err, user) => {
+      if (err) { 
+        console.log('Error updating user balance:', err).end(); 
+        res.status(500).send('Could not update balance');
+      }
+
+      user.balance += Number(amountToLoad);
+
+      user.save((err, updatedUser) => {
+        if (err) {
+            console.log('Error saving user:', err);
+            res.status(500).end();
+          }
+          res.status(201).json(updatedUser.balance);
+        });
+      });
 });
 
 // borrar despues
