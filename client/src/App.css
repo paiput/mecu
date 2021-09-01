@@ -130,6 +130,22 @@ a {
 .cart-button {
   background: none;
   border: none;
+  position: relative;
+}
+
+.cart-button span.cart-button__products-counter {
+  background-color: var(--red);
+  border-radius: 50%;
+  bottom: 0;
+  color: #FFF;
+  display: grid;
+  font-size: .7rem;  
+  height: .85rem;
+  place-content: center;
+  position: absolute;
+  right: 0;
+  transform: translate(0%, 50%);
+  width: .85rem;
 }
 /* /Header */
 
@@ -150,6 +166,24 @@ a {
   gap: .5em;
 }
 /* /Hamb-Menu */
+
+/* Cart */
+.cart-container {
+  background-color: #FFF;
+  padding: 1rem;
+}
+
+.cart__products-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.cart-container button {
+  width: 100%;
+}
+/* /Cart */
 
 /* Form-Generals */
 .form-container {
