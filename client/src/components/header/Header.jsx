@@ -43,7 +43,10 @@ export const Header = ({ hambMenuState, cartState }) => {
             </div>
             <button className="cart-button" onClick={handleShowCart}>
               <Icon.Cart className="icon big-icon" />
-              <span className="cart-button__products-counter">{cart.length > 9 ? '9+' : cart.length}</span>
+              {cart.length === 0
+                ? ''
+                : <span className="cart-button__products-counter">{cart.length > 9 ? '9+' : cart.length}</span>
+              }
             </button>
           </div>
         </nav>
