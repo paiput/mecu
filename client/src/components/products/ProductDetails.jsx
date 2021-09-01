@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import productService from '../../services/products';
+import handleService from '../../services/handlers';
 // components
 import { LatestProduct } from './LatestProduct';
 // borrar despues
@@ -31,7 +32,7 @@ export const ProductDetails = () => {
             </div>
             <div className="product-details__text-container">
               <p className="product-details__description">{product.description}</p>
-              <p className="product-details__price">${product.price}</p>
+              <p className="product-details__price">${handleService.numberWithCommas(product.price)}</p>
               <p>Publicado por: {product.user.username}</p>
               {
                 product.quantity > 1

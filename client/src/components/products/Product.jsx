@@ -2,6 +2,7 @@
 import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import * as Icon from 'react-bootstrap-icons';
+import handleService from '../../services/handlers';
 // borrar despues
 import emptyImg from './empty.jpg';
 import { CartContext } from '../../contexts/CartContext';
@@ -35,7 +36,7 @@ export const Product = ({ product }) => {
       </div>
       <div className="product-info">
         <p className="product__name">{product.name}</p>
-        <p className="product__price">${product.price}</p>
+        <p className="product__price">${handleService.numberWithCommas(product.price)}</p>
         <div className="product__buttons-container">
           <button className="primary-button">Comprar ahora</button>
           <div className="icon-button-container">
