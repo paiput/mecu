@@ -50,12 +50,17 @@ const App = () => {
     productService.getAll()
       .then(fetchedProducts => {
         console.log('Products fetched');
-        
-        user
-          ? setProducts(products => products.filter(product => product.user.username !== user.username))
-          : setProducts(fetchedProducts);
 
-        setRandomProduct(fetchedProducts[Math.floor(Math.random() * fetchedProducts.length)]);
+        if (user) {
+          const filteredProducts = fetchedProducts.filter(product => product.user.username !== user.username);
+          setProducts(filteredProducts);
+          setRandomProduct(filteredProducts[Math.floor(Math.random() * filteredProducts.length)])
+        } 
+        else {
+          setProducts(fetchedProducts);
+          setRandomProduct(fetchedProducts[Math.floor(Math.random() * fetchedProducts.length)]);
+        }
+
         setLoading(false);
       });
   }, [user]);
