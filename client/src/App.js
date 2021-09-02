@@ -34,15 +34,8 @@ const App = () => {
   const [hambMenu, setHambMenu] = useState(false);
   const [cartContainer, setCartContainer] = useState(false);
 
+  // se fija si el usuario sigue loggeado la primera vez que App renderiza
   useEffect(() => {
-    productService.getAll()
-      .then(fetchedProducts => {
-        console.log('Products fetched');
-        setProducts(fetchedProducts);
-        setRandomProduct(fetchedProducts[Math.floor(Math.random() * fetchedProducts.length)]);
-        setLoading(false);
-      });
-
     loginService.getLoggedUser()
       .then(loggedUser => {
         setUser(loggedUser.data);
@@ -51,6 +44,21 @@ const App = () => {
         console.log('Error when getting logged user:', err);
       });
   }, []);
+
+  // renderiza los productos, y en cuanto se loguea un usuario filtra sus productos publicados
+  useEffect(() => {
+    productService.getAll()
+      .then(fetchedProducts => {
+        console.log('Products fetched');
+        
+        user
+          ? setProducts(products => products.filter(product => product.user.username !== user.username))
+          : setProducts(fetchedProducts);
+
+        setRandomProduct(fetchedProducts[Math.floor(Math.random() * fetchedProducts.length)]);
+        setLoading(false);
+      });
+  }, [user]);
 
   const getUser = () => {
     console.log('usuario:', user);
