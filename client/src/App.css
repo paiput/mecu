@@ -7,6 +7,7 @@
   --light-gray: #BBB;
   --very-light-gray: #EEE;
   --red: #E83A2A;
+  --very-light-red: #FFECEC;
   --yellow: #FFF159;
   /* Fonts */
   --primary-font: sans-serif;
@@ -31,11 +32,36 @@ body {
 }
 
 /* Generals */
-button { cursor: pointer; }
+button { 
+  cursor: pointer; 
+}
 
 button > .icon {
   display: grid;
   place-content: center;
+}
+
+.text-button {
+  border: none;
+  border-radius: .25rem;
+  padding: .75em 1em;
+}
+
+.primary-button {
+  background-color: var(--blue);
+  color: #FFF;
+}
+.secondary-button {
+  background-color: var(--very-light-blue);
+  color: var(--blue);
+}
+.primary-danger-button {
+  color: #FFF;
+  background-color: var(--red);
+}
+.secondary-danger-button {
+  color: var(--red);
+  background-color: var(--very-light-red);
 }
 
 a {
@@ -290,25 +316,18 @@ a {
   gap: .5rem;
 }
 
-.primary-button {
-  background-color: var(--blue);
-  border: none;
-  border-radius: 5px;
-  color: #FFF;
-  padding: .5em .25em;
-}
-.secondary-button {
-  background-color: var(--very-light-blue);
-  border: none;
-  border-radius: 5px;
-  color: var(--blue);
-  padding: .5em .25em;
-}
 .product-button {
   background: none;
   border: none;
 }
 /* /Products-Generals */
+
+/* Features-Product */
+.product-link {
+  border-radius: .25rem;
+  padding: .5em 1em;
+}
+/* /Features-Product */
 
 /* Latest-Products */
 .latest-products-container {
@@ -355,16 +374,40 @@ a {
   flex-direction: column;
   gap: .5rem;
 }
+
+.product-details .product-button {
+  background-color: var(--very-light-gray);
+  border-radius: 50%;
+  margin: 1em;
+  padding: .5em;
+  position: absolute;
+  right: 0;
+}
+
+.product-details .product-button .icon {
+  transform: translateY(.75px);
+}
 /* /Product-Details */
 
 /* User-Account */
-/* .user-container {} */
+.user-container {
+  margin: var(--default-spacing);
+  background-color: #FFF;
+  border-radius: .25rem;
+}
+
+.user-container__child {
+  border-bottom: 1px solid var(--very-light-gray);
+  padding: var(--default-spacing);
+}
+
 .user__profile {
   align-items: center;
   display: flex;
   flex-direction: column;
   gap: .5rem;
-  padding: 2rem;
+  padding-bottom: 2rem;
+  padding-top: 2rem;
 }
 .user__img-container {
   text-align: center;
@@ -372,12 +415,23 @@ a {
 .user__img {
   width: 50%;
   border-radius: 50%;
+  box-shadow: 0 0 30px -15px var(--light-gray);
+}
+
+.user__links {
+  display: flex;
+  flex-direction: column;
+  gap: .5em;
 }
 
 .user__link {
-  display: block; /* mejorar despues */
-  margin: .5em 0;
   color: blue;
+}
+
+.danger-buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
 }
 /* /User-Account */
 
