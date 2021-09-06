@@ -14,7 +14,7 @@ export const HambMenu = () => {
       user
         ? <>      
           <Link to="/account" className="hamb-menu__link"><Icon.Person />Cuenta</Link>
-          <Link to="/favorites" className="hamb-menu__link"><Icon.Heart />Favoritos</Link>
+          <Link to="/account/favorites" className="hamb-menu__link"><Icon.Heart />Favoritos</Link>
           <Link to="/sell" className="hamb-menu__link"><Icon.Tag />Vender</Link>
           <Link to="/account/balance" className="hamb-menu__link"><Icon.Wallet2 />Cargar saldo</Link>
         </>
