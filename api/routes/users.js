@@ -87,6 +87,9 @@ Router.get('/user', (req, res) => {
     .populate('products', {
       user: false // no devuelve el id del usuario por cada producto
     })
+    .populate('likedProducts', {
+      user: false
+    })
     .exec((err, user) => {
       if (err) { 
         console.log('Error finding logged user:', err).end(); 
@@ -97,13 +100,13 @@ Router.get('/user', (req, res) => {
 });
 
 // update del saldo de un usuario
-Router.put('/users/:username', (req, res) => {
+Router.put('/users/:username/balance', (req, res) => {
   const { amountToLoad } = req.body;
 
   User.findOne({ username: req.params.username })
     .exec((err, user) => {
       if (err) { 
-        console.log('Error updating user balance:', err).end(); 
+        console.log('Error updating user balance:', err); 
         res.status(500).send('Could not update balance');
       }
 
@@ -114,9 +117,37 @@ Router.put('/users/:username', (req, res) => {
             console.log('Error saving user:', err);
             res.status(500).end();
           }
-          res.status(201).json(updatedUser.balance);
-        });
+        res.status(201).json(updatedUser.balance);
       });
+    });
+});
+
+// añadir producto a favoritos de un usuario
+Router.put('/users/:username/likes', (req, res) => {
+  const likedProduct = req.body;
+
+  User.findOne({ username: req.params.username })
+    .populate('likedProducts')
+    .exec(async (err, user) => {
+      if (err) throw err;
+      if (!user) console.log('User not found');
+
+      if (user.likedProducts.some(product => product._id.toString() === likedProduct._id)) {
+        const filteredProducts = user.likedProducts.filter(product => product._id.toString() !== likedProduct._id);
+        user.likedProducts = filteredProducts;
+        const updatedUser = await user.save();
+        res.status(201).json(updatedUser.likedProducts);
+      }
+      else {
+        user.likedProducts = user.likedProducts.concat(likedProduct);
+        const updatedUser = await user.save();
+        User.findOne({ username: updatedUser.username })
+          .populate('likedProducts')
+          .exec((err, user) => {
+            res.status(201).json(user.likedProducts);
+          });
+      }
+    });
 });
 
 // borrar despues
