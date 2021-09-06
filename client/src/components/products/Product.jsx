@@ -1,16 +1,16 @@
 // imports
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import * as Icon from 'react-bootstrap-icons';
 import handleService from '../../services/handlers';
+import userService from '../../services/users';
 // borrar despues
 import emptyImg from './empty.jpg';
 import { CartContext } from '../../contexts/CartContext';
 import { UserContext } from '../../contexts/UserContext';
 
 export const Product = ({ product }) => {
-  const [liked, setLiked] = useState(false); // crear funcionalidad para los likes
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const { cart, setCart } = useContext(CartContext);
 
   const handleCartClick = () => {
@@ -27,6 +27,23 @@ export const Product = ({ product }) => {
     }
   }
 
+  const handleLike = () => {
+    if (user) {
+      userService.handleProductLike(user.username, product)
+        .then(updatedLikedProducts => {
+          setUser(userData => {
+            return {...userData, likedProducts: updatedLikedProducts} 
+          })
+        })
+        .catch(err => {
+          console.log('Error while liking product', err);
+        })
+    }
+    else {
+      alert('Iniciá sesión para guardar productos en favoritos');
+    }
+  }
+
   return (
     <>
       <div className="product__img-container">
@@ -38,11 +55,11 @@ export const Product = ({ product }) => {
         <p className="product__name">{product.name}</p>
         <p className="product__price">${handleService.numberWithCommas(product.price)}</p>
         <div className="product__buttons-container">
-          <button className="primary-button">Comprar ahora</button>
+          <Link to={`/products/${product._id}`} className="text-button primary-button product-link">Ver</Link>
           <div className="icon-button-container">
-            <button className="product-button" >
+            <button className="product-button" onClick={handleLike}>
               {
-                liked
+                user?.likedProducts.some(likedProduct => likedProduct._id === product._id)
                   ? <Icon.HeartFill className="icon big-icon heart" />
                   : <Icon.Heart className="icon big-icon heart" />
               }
