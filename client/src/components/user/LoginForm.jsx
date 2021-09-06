@@ -58,7 +58,7 @@ export const LoginForm = () => {
           </div>
           {errors.password?.type === 'required' && <InputMsg msg="Este campo es requerido" />}
         </div>
-        <button type="submit" className="primary-button">Iniciar sesión</button>
+        <button type="submit" className="text-button primary-button">Iniciar sesión</button>
         <Link to="/register" className="form-link">Aún no tengo cuenta</Link>
       </form>
     )

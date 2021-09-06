@@ -23,7 +23,7 @@ export const CartContainer = () => {
               return <CartProduct product={product} key={product._id} />
             })}
           </div>
-          <button onClick={handleEmptyCart} className="primary-button">Vaciar carrito</button>
+          <button onClick={handleEmptyCart} className="text-button primary-button">Vaciar carrito</button>
         </>
         : <p>El carrito está vacío</p>}
     </div>

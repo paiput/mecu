@@ -77,7 +77,7 @@ export const RegisterForm = () => {
           </div>
           {errors.password?.type === 'required' && <InputMsg msg="Este campo es requerido" />}
         </div>
-        <button type="submit" className="primary-button">Registrarse</button>
+        <button type="submit" className="text-button primary-button">Registrarse</button>
         <Link to="/login" className="form-link">Ya tengo cuenta</Link>
       </form>
     )
