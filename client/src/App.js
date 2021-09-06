@@ -22,6 +22,7 @@ import { LoginForm } from './components/user/LoginForm';
 import { Account } from './components/user/Account';
 import { PublishedProducts } from './components/user/PublishedProducts';
 import { Balance } from './components/user/Balance';
+import { LikedProducts } from './components/user/LikedProducts';
 
 const App = () => {
   const [user, setUser] = useState(null); // estado global del usuario
@@ -63,7 +64,10 @@ const App = () => {
 
         setLoading(false);
       });
-  }, [user]);
+  // el useEffect se ejecuta cada vez que se loguee un usuario o cierre sesión
+  // el comentario de abajo es para desactivar una advertencia del eslint
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.username]); 
 
   const getUser = () => {
     console.log('usuario:', user);
@@ -81,44 +85,49 @@ const App = () => {
           <CartContext.Provider value={{ cart, setCart }} >
             <button onClick={getUser}>mostar usuario</button>
             <Header hambMenuState={{hambMenu, setHambMenu}} cartState={{cartContainer, setCartContainer}} />
-            <Switch>
-              <Route exact path="/">
-                {
-                  loading
-                    ? 'Cargando...'
-                    : products.length === 0
-                    ? <p>Aún no hay productos publicados, sé el primero.</p>
-                    : <>
-                          <FeaturedProduct product={randomProduct} />
-                          <LatestProducts products={products} />
-                      </>
-                }
-              </Route>
-              <Route path="/products/:id">
-                <ProductDetails />
-              </Route>
-              <Route path="/sell">
-                <SellForm />
-              </Route>
-              <Route path="/register">
-                <RegisterForm />
-              </Route>
-              <Route path="/login">
-                <LoginForm />
-              </Route>
-              <Route exact path="/account">
-                <Account />
-              </Route>
-              <Route path="/account/balance">
-                <Balance />
-              </Route>
-              <Route path="/account/publishedproducts">
-                <PublishedProducts />
-              </Route>
-              <Route path="/">
-                <h2>Not found</h2>
-              </Route>
-            </Switch>
+            <main>
+              <Switch>
+                <Route exact path="/">
+                  {
+                    loading
+                      ? 'Cargando...'
+                      : products.length === 0
+                      ? <p>Aún no hay productos publicados, sé el primero.</p>
+                      : <>
+                            <FeaturedProduct product={randomProduct} />
+                            <LatestProducts products={products} />
+                        </>
+                  }
+                </Route>
+                <Route path="/products/:id">
+                  <ProductDetails />
+                </Route>
+                <Route path="/sell">
+                  <SellForm />
+                </Route>
+                <Route path="/register">
+                  <RegisterForm />
+                </Route>
+                <Route path="/login">
+                  <LoginForm />
+                </Route>
+                <Route exact path="/account">
+                  <Account />
+                </Route>
+                <Route path="/account/balance">
+                  <Balance />
+                </Route>
+                <Route path="/account/favorites">
+                  <LikedProducts />
+                </Route>
+                <Route path="/account/publishedproducts">
+                  <PublishedProducts />
+                </Route>
+                <Route path="/">
+                  <h2>Not found</h2>
+                </Route>
+              </Switch>
+            </main>
           </CartContext.Provider>
         </UserContext.Provider>
       </div>
