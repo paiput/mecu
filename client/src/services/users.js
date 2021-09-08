@@ -13,7 +13,7 @@ const handleProductLike = (username, likedProduct) => {
 }
 
 const handleProductPurchase = (user, product, amountToBuy) => {
-  if (product.price > user.balance) {
+  if (product.price * amountToBuy > user.balance) {
     const requests = {
       updatedUser: Promise.reject(new Error('failedUser')),
       updatedProduct: Promise.reject(new Error('failedProduct'))
