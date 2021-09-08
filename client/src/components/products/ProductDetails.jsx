@@ -6,6 +6,7 @@ import handleService from '../../services/handlers';
 import userService from '../../services/users';
 // components
 import { LatestProduct } from './LatestProduct';
+import { BuyNow } from './BuyNow';
 import * as Icon from 'react-bootstrap-icons';
 // borrar despues
 import emptyImg from './empty.jpg';
@@ -15,6 +16,7 @@ import { UserContext } from '../../contexts/UserContext';
 export const ProductDetails = () => {
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(true);
+  const [buyNow, setBuyNow] = useState(false);
   const { id } = useParams();
   const { user, setUser } = useContext(UserContext);
   const { cart, setCart } = useContext(CartContext);
@@ -26,7 +28,7 @@ export const ProductDetails = () => {
       setLoading(false);
       window.scrollTo(0, 0); // scrollea hacia arriba para que se vea el producto seleccionado
     });
-  }, [id]);
+  }, [id, user?.balance]);
 
   const handleCartClick = () => {
     if (user) {
@@ -59,14 +61,19 @@ export const ProductDetails = () => {
     }
   }
 
+  const handleBuyNow = () => {
+    if (user) setBuyNow(true);
+    else if (!user) alert('Iniciá sesión para poder comprar un producto');
+  }
+
   const renderProductDetails = () => {
     return (
       <>
         <div className="product-details">
             <h2 className="product-details__name">{product.name}</h2>
             <div className="product__img-container">
-              <button className="product-button" onClick={handleLike}>
-                {user?.likedProducts.includes(product._id)
+              <button className="product-button product-details__like-button" onClick={handleLike}>
+                {user?.likedProducts.some(likedProduct => likedProduct._id.toString() === product._id)
                   ? <Icon.HeartFill className="icon big-icon heart"/>
                   : <Icon.Heart className="icon big-icon heart"/>}
               </button>
@@ -82,7 +89,9 @@ export const ProductDetails = () => {
                   : <p className="product-details__quantity"><strong style={{color: 'var(--red)'}}>Única unidad disponible</strong></p>
               }
               <div className="product-details__buttons-container">
-                <button className="product-details__button text-button primary-button">Comprar ahora</button>
+                <button className="product-details__button text-button primary-button" onClick={handleBuyNow}>
+                  Comprar ahora
+                </button>
                 <button className="product-details__button text-button secondary-button" onClick={handleCartClick}>
                   {
                     cart.includes(product) 
@@ -92,6 +101,7 @@ export const ProductDetails = () => {
                 </button>
               </div>
             </div>
+            {buyNow && <BuyNow setBuyNow={setBuyNow} product={product} />}
         </div>
 
         {

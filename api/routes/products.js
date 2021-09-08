@@ -4,6 +4,7 @@ const Router = express.Router();
 const Product = require('../models/Product');
 const User = require('../models/User');
 
+// get a todos los productos
 Router.get('/products', (req, res) => {
   Product.find({})
     .populate('user', {
@@ -18,6 +19,7 @@ Router.get('/products', (req, res) => {
     });
 });
 
+// get a un producto especifico
 Router.get('/products/:id', (req, res) => {
   Product.findById(req.params.id)
     .populate('user')
@@ -39,6 +41,7 @@ Router.get('/products/:id', (req, res) => {
     });
 });
 
+// post de un producto
 Router.post('/products', async (req, res) => {
   const { name, description, price, quantity, username } = req.body;
 
@@ -63,6 +66,22 @@ Router.post('/products', async (req, res) => {
     await user.save();
     res.status(201).json(savedProduct);
   });
+});
+
+// compra de un producto
+Router.put('/products/:id', (req, res) => {
+  const { amountToBuy } = req.body;
+  Product.findById(req.params.id)
+    .exec((err, product) => {
+      if (err) console.log('uy, error', err);
+      if (!product) console.log('no se encontro pa');
+      
+      product.quantity -= Number(amountToBuy);
+      product.save((err, updatedProduct) => {
+        if (err) console.log('Error al actualizar cantidad:', err);
+        res.status(200).json(updatedProduct);
+      });
+    });
 });
 
 // corregir despues
