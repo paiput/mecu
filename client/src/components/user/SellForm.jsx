@@ -49,6 +49,7 @@ export const SellForm = () => {
         <div className="sell-form__input-container">
           <label htmlFor="name">Producto:</label>
           <input 
+            className="form-container__input"
             type="text"
             id="input__product-name"
             onKeyPress={filterBadInputs}
@@ -65,11 +66,12 @@ export const SellForm = () => {
         <div className="sell-form__input-container">
           <label htmlFor="description">Descripción:</label>
           <textarea
+            className="form-container__input"
             id="input__product-description"
             onKeyPress={filterBadInputs}
             {...register("description", { 
               required: true, 
-              minLength: 35, 
+              minLength: 25, 
               maxLength: 750 
             })}
           />
@@ -78,24 +80,28 @@ export const SellForm = () => {
           {errors.description?.type === 'maxLength' && <InputMsg msg="Supera el límite de caracteres" />}
         </div>
         <div className="sell-form__input-container">
-          <label htmlFor="price">Precio:$</label>
-          <input 
-            type="number"
-            id="input__product-price"
-            onKeyPress={filterNotNumbers}
-            {...register("price", { 
-              required: true,
-              min: 1, 
-              max: 9999999
-            })}
-          />
+          <label htmlFor="price">Precio:</label>
+          <div className="product-price__container form-container__input">
+            <span className="price-symbol">$</span>
+            <input
+              type="number"
+              id="input__product-price"
+              onKeyPress={filterNotNumbers}
+              {...register("price", { 
+                required: true,
+                min: 1, 
+                max: 9999999
+              })}
+            />
+          </div>
           {errors.price?.type === 'required' && <InputMsg msg="Este campo es requerido" />}
           {errors.price?.type === 'min' && <InputMsg msg="No supera el precio mínimo" />}
           {errors.price?.type === 'max' && <InputMsg msg="Supera el precio máximo" />}
         </div>
         <div className="sell-form__input-container">
-          <label htmlFor="quantity">Cantidad:</label>
+          <label htmlFor="quantity">Unidades disponibles:</label>
           <input 
+            className="form-container__input"
             type="number"
             id="input__product-quantity"
             onKeyPress={filterNotNumbers}
@@ -109,7 +115,7 @@ export const SellForm = () => {
           {errors.quantity?.type === 'min' && <InputMsg msg="No se puede cargar menos de una unidad" />}
           {errors.quantity?.type === 'max' && <InputMsg msg="Supera la cantidad máxima de unidades que se pueden publicar" />}
         </div>
-        <button className="primary-button" type="submit">Publicar</button>
+        <button className="text-button primary-button" type="submit">Publicar</button>
       </form>
     </div>
   )

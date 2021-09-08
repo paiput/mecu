@@ -37,6 +37,7 @@ export const LoginForm = () => {
         <h2 className="form-title">Iniciar sesión</h2>
         <div className="form-container__input-container">
           <input 
+            className="form-container__input"
             type="text"
             placeholder="Usuario"
             {...register("username", { 
@@ -48,6 +49,7 @@ export const LoginForm = () => {
         <div className="form-container__input-container">
           <div className="password-input-container">
             <input 
+              className="form-container__input"
               type={ isPasswordHidden ? "password" : "text" }
               placeholder="Contraseña"
               {...register("password", { 

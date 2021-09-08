@@ -36,6 +36,7 @@ export const RegisterForm = () => {
         <h2 className="form-title">Registrarse</h2>
         <div className="form-container__input-container">
           <input 
+            className="form-container__input"
             type="text"
             placeholder="Nombre"
             {...register("name", { 
@@ -46,6 +47,7 @@ export const RegisterForm = () => {
         </div>
         <div className="form-container__input-container">
           <input 
+            className="form-container__input"
             type="text"
             placeholder="Apellido"
             {...register("surname", { 
@@ -56,6 +58,7 @@ export const RegisterForm = () => {
         </div>
         <div className="form-container__input-container">
           <input 
+            className="form-container__input"
             type="text"
             placeholder="Usuario"
             {...register("username", { 
@@ -67,6 +70,7 @@ export const RegisterForm = () => {
         <div className="form-container__input-container">
           <div className="password-input-container">
             <input 
+              className="form-container__input"
               type={ isPasswordHidden ? "password" : "text" }
               placeholder="Contraseña"
               {...register("password", { 

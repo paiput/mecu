@@ -12,7 +12,6 @@ export const BuyNow = ({ setBuyNow, product }) => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
   const handleClickOutside = (e) => {
-    // console.log('click')
     if (!e.target.classList.contains('buy-now-container') && !e.target.parentElement.classList.contains('buy-now-container') && !e.target.parentElement.parentElement.classList.contains('buy-now-container')) {
       setBuyNow(false);
     }
@@ -61,32 +60,35 @@ export const BuyNow = ({ setBuyNow, product }) => {
   }
 
   return (
-    <form className="buy-now-container" onSubmit={handleSubmit(onSubmit)}>
-      <button className="product-button" onClick={() => setBuyNow(false)}>
-        <Icon.XCircle className="icon big-icon"/>
-      </button>
-      <h2>{product.name}</h2>
-      <h3>${hanldeService.numberWithCommas(product.price)}</h3>
-      <h3>{product.quantity} unidades restantes</h3>
-      <h3>Por: {product.user.username}</h3>
-      <div>
-        <h3>Cantidad a comprar</h3>
-        <input 
-          type="number"
-          id="input__product-amount-to-buy"
-          onKeyPress={filterNotNumbers}
-          defaultValue={1}
-          {...register("amountToBuy", { 
-            min: 1, 
-            max: product.quantity
-          })}
-        />
-        {errors.amountToBuy?.type === 'min' && <InputMsg msg="Se debe comprar al menos un producto" />}
-        {errors.amountToBuy?.type === 'max' && <InputMsg msg="Supera la cantidad de unidades disponibles" />}
-      </div>
-      <button type="submit" className="text-button primary-button">
-        Finalizar compra
-      </button>
-    </form>
+    <div className="buy-now-container__shadow">
+      <form className="buy-now-container" onSubmit={handleSubmit(onSubmit)}>
+        <button className="product-button exit-button" onClick={() => setBuyNow(false)}>
+          <Icon.XCircle className="icon big-icon"/>
+        </button>
+        <h2>{product.name}</h2>
+        <h3>${hanldeService.numberWithCommas(product.price)}</h3>
+        <h3>{product.quantity} unidades restantes</h3>
+        <h3>Por: {product.user.username}</h3>
+        <div>
+          <h3>Cantidad a comprar</h3>
+          <input 
+            className="form-container__input"
+            type="number"
+            id="input__product-amount-to-buy"
+            onKeyPress={filterNotNumbers}
+            defaultValue={1}
+            {...register("amountToBuy", { 
+              min: 1, 
+              max: product.quantity
+            })}
+          />
+          {errors.amountToBuy?.type === 'min' && <InputMsg msg="Se debe comprar al menos un producto" />}
+          {errors.amountToBuy?.type === 'max' && <InputMsg msg="Supera la cantidad de unidades disponibles" />}
+        </div>
+        <button type="submit" className="text-button primary-button">
+          Finalizar compra
+        </button>
+      </form>
+    </div>
   )
 }

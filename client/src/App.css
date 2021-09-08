@@ -3,6 +3,7 @@
   --blue: #339AF0;
   --very-light-blue: #ECF3FC;
   --black: #333;
+  --transparent-black: rgba(0, 0, 0, .5);
   --gray: #888;
   --light-gray: #BBB;
   --very-light-gray: #EEE;
@@ -184,6 +185,7 @@ a {
   padding: 1.25rem 1rem;
   position: absolute;
   width: 100%;
+  z-index: 100;
 }
 
 .hamb-menu__link {
@@ -200,6 +202,7 @@ a {
   position: absolute;
   right: 0;
   width: 50%;
+  z-index: 100;
 }
 
 .cart__products-container {
@@ -236,7 +239,7 @@ a {
   width: 90%;
 }
 
-.form-container input {
+.form-container__input {
   border: 2px solid var(--very-light-gray);
   border-bottom: none;
   border-radius: .175rem;
@@ -375,7 +378,7 @@ a {
   gap: .5rem;
 }
 
-.product-details .product-button {
+.product-details__like-button {
   background-color: var(--very-light-gray);
   border-radius: 50%;
   margin: 1em;
@@ -388,6 +391,32 @@ a {
   transform: translateY(.75px);
 }
 /* /Product-Details */
+
+/* Buy-Now */
+.buy-now-container__shadow {
+  background-color: var(--transparent-black);
+  display: grid;
+  height: 100%;
+  place-content: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.buy-now-container {
+  background-color: #FFF;
+  border-radius: .25rem;
+  box-shadow: 0 0 30px -15px var(--black);
+  padding: 2rem;
+  position: relative;
+}
+
+.buy-now-container .exit-button {
+  position: absolute;
+  top: .5em;
+  left: .5em;
+}
+/* /Buy-Now */
 
 /* User-Account */
 .user-container {
@@ -445,10 +474,16 @@ a {
   padding: .5em 0;
 }
 
-.sell-form input {
+.product-price__container {
+  align-items: center;
+  display: flex;
+}
+
+#input__product-price {
   border: none;
-  border-bottom: 2px solid black;
+  margin-left: .5em;
   outline: none;
+  width: 100%;
 }
 
 .sell-form textarea {
@@ -474,5 +509,8 @@ a {
 
 .heart {
   color: var(--red);
+}
+.price-symbol {
+  color: var(--gray);
 }
 /* /Modifiers */
