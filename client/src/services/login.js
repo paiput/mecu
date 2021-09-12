@@ -12,6 +12,11 @@ const getLoggedUser = () => {
   return request;
 }
 
-const exportableFunctions = { login, getLoggedUser };
+const logout = () => {
+  const request = axios.get('/api/logout');
+  return request;
+}
+
+const exportableFunctions = { login, getLoggedUser, logout };
 
 export default exportableFunctions;
