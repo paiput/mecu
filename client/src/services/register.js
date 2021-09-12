@@ -7,6 +7,12 @@ const register = credentials => {
   return request;
 }
 
-const exportableFunctions = { register };
+const deleteAccount = credentials => {
+  const { _id: userId } = credentials;
+  const request = axios.delete(`${baseUrl}/${userId}`, credentials);
+  return request;
+}
+
+const exportableFunctions = { register, deleteAccount };
 
 export default exportableFunctions;
