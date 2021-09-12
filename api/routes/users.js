@@ -4,6 +4,7 @@ const passport = require('passport');
 const Router = express.Router();
 
 const User = require('../models/User');
+const Product = require('../models/Product');
 
 Router.get('/users', (req, res) => {
   User.find({})
@@ -148,6 +149,22 @@ Router.put('/users/:username/likes', (req, res) => {
           });
       }
     });
+});
+
+
+// cierre de sesion del usuario
+Router.get('/logout', (req, res) => {
+  req.logOut();
+  res.send('User logged out succesfully');
+});
+
+// borrar cuenta del usuario
+Router.delete('/users/:userId', async (req, res) => {
+  console.log('req.params:', req.params);
+  // borra todos los productos que haya publicado el usuario
+  await Product.deleteMany({ user: { $in: req.params.userId } })
+  await User.findByIdAndDelete(req.params.userId);
+  res.send('User account deleted succefully');
 });
 
 // borrar despues
