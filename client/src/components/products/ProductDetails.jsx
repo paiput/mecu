@@ -68,54 +68,55 @@ export const ProductDetails = () => {
 
   const renderProductDetails = () => {
     return (
-      <>
-        <div className="product-details">
-            <h2 className="product-details__name">{product.name}</h2>
-            <div className="product__img-container">
-              <button className="product-button product-details__like-button" onClick={handleLike}>
-                {user?.likedProducts.some(likedProduct => likedProduct._id.toString() === product._id)
-                  ? <Icon.HeartFill className="icon big-icon heart"/>
-                  : <Icon.Heart className="icon big-icon heart"/>}
-              </button>
-              <img className="product__img" src={emptyImg} alt="..." />
-            </div>
-            <div className="product-details__text-container">
-              <p className="product-details__description">{product.description}</p>
-              <p className="product-details__price">${handleService.numberWithCommas(product.price)}</p>
-              <p>Publicado por: {product.user.username}</p>
-              {
-                product.quantity > 1
-                  ? <p className="product-details__quantity">Quedan <strong>{product.quantity}</strong> unidades</p>
-                  : <p className="product-details__quantity"><strong style={{color: 'var(--red)'}}>Única unidad disponible</strong></p>
-              }
-              <div className="product-details__buttons-container">
-                <button className="product-details__button text-button primary-button" onClick={handleBuyNow}>
-                  Comprar ahora
-                </button>
-                <button className="product-details__button text-button secondary-button" onClick={handleCartClick}>
-                  {
-                    cart.includes(product) 
-                      ? "Quitar del carrito"
-                      : "Agregar al carrito"
-                  }
-                </button>
-              </div>
-            </div>
-            {buyNow && <BuyNow setBuyNow={setBuyNow} product={product} />}
+      <div className="product-details">
+        <h2 className="product-details__name">{product.name}</h2>
+        <div className="product__img-container">
+          <button className="product-button product-details__like-button" onClick={handleLike}>
+            {user?.likedProducts.some(likedProduct => likedProduct._id.toString() === product._id)
+              ? <Icon.HeartFill className="icon big-icon heart"/>
+              : <Icon.Heart className="icon big-icon heart"/>}
+          </button>
+          <img className="product__img" src={emptyImg} alt="..." />
         </div>
-
-        {
-          product.user.products.length > 0
-          ? <>
-            <hr />
-            <h3>Otros productos publicados por {product.user.username}</h3>
-            {product.user.products.map(product => {
-                return <LatestProduct product={product} key={product._id} />
-              })}
-          </>
-            : ''
-        }
-      </>
+        <div className="product-details__text-container">
+          <p className="product-details__description">{product.description}</p>
+          <p className="product-details__price">${handleService.numberWithCommas(product.price)}</p>
+          <p>Publicado por: {product.user.username}</p>
+          {product.quantity > 1 ? (
+            <p className="product-details__quantity">Quedan <strong>{product.quantity}</strong> unidades</p>
+          ) : product.quantity === 1 ? (
+            <p className="product-details__quantity"><strong style={{color: 'var(--red)'}}>Única unidad disponible</strong></p>
+          ) : (
+            <p>No quedan unidades disponibles</p>
+          )}
+          {product.quantity >= 1 ? (
+            <div className="product-details__buttons-container">
+              <button className="product-details__button text-button primary-button" onClick={handleBuyNow}>
+                Comprar ahora
+              </button>
+              <button className="product-details__button text-button secondary-button" onClick={handleCartClick}>
+                {cart.includes(product) 
+                  ? "Quitar del carrito"
+                  : "Agregar al carrito"}
+              </button>
+            </div>
+          ) : (
+            <button className="text-button" disabled="true">La publicación está pausada</button>
+          )}
+        </div>
+        <div className="related-products">
+          {product.user.products.length > 0 ? (
+              <>
+                <hr />
+                <h3>Otros productos publicados por {product.user.username}</h3>
+                {product.user.products.map(product => {
+                  return <LatestProduct product={product} key={product._id} />
+                })}
+              </>
+            ) : ''}
+        </div>
+        {buyNow && <BuyNow setBuyNow={setBuyNow} product={product} />}
+      </div>
     )
   }
   return (
