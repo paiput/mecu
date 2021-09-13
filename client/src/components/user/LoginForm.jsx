@@ -7,6 +7,7 @@ import loginService from '../../services/login';
 import { useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
 // components
+import toast from 'react-hot-toast';
 import { InputMsg } from './InputMsg';
 import { PasswordEye } from './PasswordEye';
 
@@ -22,9 +23,11 @@ export const LoginForm = () => {
       .then(async res => {
         console.log(res.data); // loguea si el usuario se pudo autenticar correctamente
         const loggedUser = await loginService.getLoggedUser();
+        toast(`Hola, ${loggedUser.data.name}`, { icon: '👋' });
         setUser(loggedUser.data);
       })
       .catch(err => {
+        toast.error('Usuario o contraseña incorrectos');
         console.log('Error when loggin in:', err);
       });
       

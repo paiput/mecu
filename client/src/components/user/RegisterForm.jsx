@@ -7,6 +7,7 @@ import registerService from '../../services/register';
 import { useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
 // components
+import toast from 'react-hot-toast';
 import { InputMsg } from './InputMsg';
 import { PasswordEye } from './PasswordEye';
 
@@ -21,6 +22,7 @@ export const RegisterForm = () => {
     
     registerService.register(userToRegister)
       .then(createdUser => {
+        toast(`Bienvenido, ${createdUser.data.name}`, { icon: '👋' });
         setUser(createdUser.data);
       })
       .catch(err => {
