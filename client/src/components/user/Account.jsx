@@ -1,13 +1,42 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import handleService from '../../services/handlers';
+import loginService from '../../services/login';
+import registerService from '../../services/register';
 // UserContext
-import { useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
+// components
+import toast from 'react-hot-toast';
+import { useHistory } from 'react-router';
 // borrar despues
 import userImg from './user.png';
 
 export const Account = () => {
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
+
+  let history = useHistory();
+  console.log(history)
+
+  const handleLogout = () => {
+    loginService.logout()
+      .then(res => {
+        toast(`Hasta pronto, ${user.name}`, { icon: '👋' });
+        setUser(null);
+      });
+    console.log('cambio el historial')
+    history.push('/'); // no funciona
+  }
+
+  const handleDeleteAccount = () => {
+    registerService.deleteAccount(user)
+      .then(res => {
+        toast(`Cuenta borrada exitosamente`, { icon: '👌' });
+        setUser(null);
+      })
+      .catch(err => {
+        console.log('error:', err);
+      });
+  }
 
   return (
     <div className="user-container">
@@ -24,7 +53,7 @@ export const Account = () => {
         <Link to="/account/balance" className="user__link">Cargar dinero</Link>
       </div>
       <div className="user-container__child">
-        <Link to="favorites" className="user__link">Favoritos</Link>
+        <Link to="/account/favorites" className="user__link">Favoritos</Link>
       </div>
       <div className="user-container__child user__links">
         <Link to="/account/publishedproducts" className="user__link">Mis publicaciones</Link>
@@ -32,8 +61,8 @@ export const Account = () => {
         <Link to="/account/productssold" className="user__link">Historial de venta</Link>
       </div>
       <div className="user-container__child danger-buttons-container">
-        <button className="text-button secondary-danger-button">Cerrar sesión</button>
-        <button className="text-button primary-danger-button">Borrar cuenta</button>
+        <button className="text-button secondary-danger-button" onClick={handleLogout}>Cerrar sesión</button>
+        <button className="text-button primary-danger-button" onClick={handleDeleteAccount}>Borrar cuenta</button>
       </div>
     </div>
   )
