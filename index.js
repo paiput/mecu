@@ -12,7 +12,7 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 
-const db = 'mongodb://localhost/mecu-db';
+const db = process.env.MONGODB_URI || 'mongodb://localhost/mecu-db';
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
   .then(() => {
     console.log('Connected succesfully to db');
@@ -30,7 +30,7 @@ require('./api/passportConfig')(passport);
 app.use('/api', require('./api/routes/users'));
 app.use('/api', require('./api/routes/products'));
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
