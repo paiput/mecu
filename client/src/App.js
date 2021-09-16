@@ -12,6 +12,7 @@ import loginService from './services/login';
 import { UserContext } from './contexts/UserContext'; // contexto del usuario
 import { CartContext } from './contexts/CartContext'; // contexto del carrito del usuario
 // components
+import { Toaster } from 'react-hot-toast';
 import { Header } from './components/header/Header';
 import { FeaturedProduct } from './components/products/FeaturedProduct';
 import { LatestProducts } from './components/products/LatestProducts';
@@ -53,6 +54,7 @@ const App = () => {
         console.log('Products fetched');
 
         if (user) {
+          console.log(user.username)
           const filteredProducts = fetchedProducts.filter(product => product.user.username !== user.username);
           setProducts(filteredProducts);
           setRandomProduct(filteredProducts[Math.floor(Math.random() * filteredProducts.length)])
@@ -83,21 +85,22 @@ const App = () => {
       <div className="App" onClick={(e) => handleClickOutsideMenus(e)}>
         <UserContext.Provider value={{ user, setUser }} >
           <CartContext.Provider value={{ cart, setCart }} >
+            <Toaster />
             <button onClick={getUser}>mostar usuario</button>
             <Header hambMenuState={{hambMenu, setHambMenu}} cartState={{cartContainer, setCartContainer}} />
             <main>
               <Switch>
                 <Route exact path="/">
-                  {
-                    loading
-                      ? 'Cargando...'
-                      : products.length === 0
-                      ? <p>Aún no hay productos publicados, sé el primero.</p>
-                      : <>
-                            <FeaturedProduct product={randomProduct} />
-                            <LatestProducts products={products} />
-                        </>
-                  }
+                  {loading ? (
+                    'Cargando...'
+                  ) : products.length === 0 ? (
+                    <p>Aún no hay productos publicados, sé el primero.</p>
+                  ) : ( 
+                    <>
+                      <FeaturedProduct product={randomProduct} />
+                      <LatestProducts products={products} />
+                    </>
+                  )}
                 </Route>
                 <Route path="/products/:id">
                   <ProductDetails />
