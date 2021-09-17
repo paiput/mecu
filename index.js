@@ -21,6 +21,9 @@ mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useFindA
     console.log('Connection error:', err);
   });
 
+// frontend
+app.use(express.static('public'));
+
 // passport
 app.use(session({ secret: 'secret', resave: true, saveUninitialized: true }))
 app.use(passport.initialize());
