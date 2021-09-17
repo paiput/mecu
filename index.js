@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const cors = require('cors');
 const morgan = require('morgan');
+const path = require('path');
 const express = require('express');
 
 const session = require('express-session'); // desde la version 1.5 cookie-parser ya no es necesario
