@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const cors = require('cors');
+// const morgan = require('morgan');
 const path = require('path');
 const express = require('express');
 
@@ -9,6 +10,7 @@ const passport = require('passport');
 const app = express();
 
 app.use(cors());
+// app.use(morgan('dev'));
 app.use(express.json());
 
 const db = process.env.MONGODB_URI || 'mongodb://localhost/mecu-db';
@@ -19,6 +21,15 @@ mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useFindA
   .catch(err => {
     console.log('Connection error:', err);
   });
+   
+// passport
+app.use(session({ secret: 'secret', resave: true, saveUninitialized: true }))
+app.use(passport.initialize());
+app.use(passport.session());
+require('./api/passportConfig')(passport);
+
+app.use('/api', require('./api/routes/users'));
+app.use('/api', require('./api/routes/products'));
 
 if (process.env.NODE_ENV === 'production') {
   // frontend
@@ -28,15 +39,6 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
-
-// passport
-app.use(session({ secret: 'secret', resave: true, saveUninitialized: true }))
-app.use(passport.initialize());
-app.use(passport.session());
-require('./api/passportConfig')(passport);
-
-app.use('/api', require('./api/routes/users'));
-app.use('/api', require('./api/routes/products'));
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
