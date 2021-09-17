@@ -6,7 +6,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "client-install": "npm install --no-optional --prefix client",
+    "client": "npm start --prefix client",
+    "build": "npm i --no-optional && npm run client-install && npm run build --prefix client",
+    "prod": "NODE_ENV=production npm start",
+    "build-prod": "npm run build && npm run prod"
   },
   "keywords": [],
   "author": "Lucas Piputto",
