@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const cors = require('cors');
-const morgan = require('morgan');
 const path = require('path');
 const express = require('express');
 
@@ -10,7 +9,6 @@ const passport = require('passport');
 const app = express();
 
 app.use(cors());
-app.use(morgan('dev'));
 app.use(express.json());
 
 const db = process.env.MONGODB_URI || 'mongodb://localhost/mecu-db';
