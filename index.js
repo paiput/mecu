@@ -23,10 +23,10 @@ mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useFindA
 
 if (process.env.NODE_ENV === 'production') {
   // frontend
-  app.use(express.static('public'));
+  app.use(express.static('client/build'));
 
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
 
