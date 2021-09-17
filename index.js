@@ -21,8 +21,14 @@ mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useFindA
     console.log('Connection error:', err);
   });
 
-// frontend
-app.use(express.static('public'));
+if (process.env.NODE_ENV === 'production') {
+  // frontend
+  app.use(express.static('public'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
+  });
+}
 
 // passport
 app.use(session({ secret: 'secret', resave: true, saveUninitialized: true }))
