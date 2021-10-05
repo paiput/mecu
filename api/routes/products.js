@@ -60,7 +60,7 @@ Router.post('/products', async (req, res) => {
   product.save(async (err, savedProduct) => {
     if (err) {
       console.log('Error saving product:', err);
-      res.end();
+      res.status(500).end();
     }
     user.products = user.products.concat(savedProduct); // removi el ._id a ver q pasa
     await user.save();

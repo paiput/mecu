@@ -1,4 +1,5 @@
 const axios = require('axios');
+const toast = require('react-hot-toast').toast;
 
 const baseUrl = '/api/products';
 
@@ -14,6 +15,11 @@ const getProduct = id => {
 
 const postProduct = product => {
   const request = axios.post(baseUrl, product);
+  toast.promise(request, {
+    loading: 'Cargando...',
+    error: 'Error, el producto no pudo ser publicado',
+    success: 'Producto publicado exitosamente'
+  });
   return request.then(res => res.data);
 }
 

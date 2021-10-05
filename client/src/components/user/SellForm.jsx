@@ -34,11 +34,7 @@ export const SellForm = () => {
     productService.postProduct(product)
       .then(product => {
         console.log('Product published:', product);
-      })
-      .catch(err => {
-        alert('Lo sentimos, el producto no pudo ser publicado');
-        console.log('Error on POST:', err);
-      })
+      });
     reset();
   }
 
