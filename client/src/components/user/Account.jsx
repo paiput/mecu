@@ -14,8 +14,7 @@ import userImg from './user.png';
 export const Account = () => {
   const { user, setUser } = useContext(UserContext);
 
-  let history = useHistory();
-  console.log(history)
+  const history = useHistory();
 
   const handleLogout = () => {
     loginService.logout()
@@ -23,18 +22,15 @@ export const Account = () => {
         toast(`Hasta pronto, ${user.name}`, { icon: '👋' });
         setUser(null);
       });
-    console.log('cambio el historial')
-    history.push('/'); // no funciona
+    history.replace('/');
   }
 
   const handleDeleteAccount = () => {
     registerService.deleteAccount(user)
       .then(res => {
         toast(`Cuenta borrada exitosamente`, { icon: '👌' });
+        history.replace('/');
         setUser(null);
-      })
-      .catch(err => {
-        console.log('error:', err);
       });
   }
 
