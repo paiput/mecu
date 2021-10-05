@@ -1,9 +1,15 @@
 const axios = require('axios');
+const toast = require('react-hot-toast').toast;
 
 const baseUrl = '/api/users';
 
 const register = credentials => {
   const request = axios.post(baseUrl, credentials);
+  toast.promise(request, {
+    loading: 'Cargando...',
+    error: 'Error al crear usuario, intente nuevamente',
+    success: res => `Bienvenid@, ${res.data.username}!`
+  });
   return request;
 }
 

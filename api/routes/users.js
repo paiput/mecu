@@ -70,11 +70,11 @@ Router.post('/users', (req, res) => {
 Router.post('/login', (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     if (err) throw err;
-    if (!user) res.send('User does not exist');
+    if (!user) res.status(404).send('El usuario no existe');
     else {
       req.logIn(user, (err) => {
         if (err) throw err;
-        res.send('User authenticated succesfully');
+        res.send(user.name);
         console.log('Logged succesfuly as', req.user.username);
       });
     }
