@@ -7,6 +7,7 @@ import userService from '../../services/users';
 // components
 import { LatestProduct } from './LatestProduct';
 import { BuyNow } from './BuyNow';
+import toast from 'react-hot-toast';
 import * as Icon from 'react-bootstrap-icons';
 // borrar despues
 import emptyImg from './empty.jpg';
@@ -40,7 +41,9 @@ export const ProductDetails = () => {
       } 
     } 
     else {
-      alert('Iniciá sesión para guardar productos en el carrito');
+      toast('Iniciá sesión para guardar productos en el carrito', {
+        icon: '🔑',
+      });
     }
   }
 
@@ -57,7 +60,9 @@ export const ProductDetails = () => {
         })
     }
     else {
-      alert('Iniciá sesión para guardar productos en favoritos');
+      toast('Iniciá sesión para guardar productos en favoritos', {
+        icon: '🔑',
+      });
     }
   }
 
@@ -104,17 +109,19 @@ export const ProductDetails = () => {
             <button className="text-button" disabled="true">La publicación está pausada</button>
           )}
         </div>
-        <div className="related-products">
+        
           {product.user.products.length > 0 ? (
-              <>
-                <hr />
-                <h3>Otros productos publicados por {product.user.username}</h3>
+            <>
+              <hr />
+              <div className="related-products">
+                <h3 className="related-products__title">Otros productos publicados por {product.user.username}</h3>
                 {product.user.products.map(product => {
                   return <LatestProduct product={product} key={product._id} />
                 })}
-              </>
+              </div>
+            </>
             ) : ''}
-        </div>
+        
         {buyNow && <BuyNow setBuyNow={setBuyNow} product={product} />}
       </div>
     )

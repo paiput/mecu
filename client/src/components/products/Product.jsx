@@ -1,6 +1,7 @@
 // imports
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import * as Icon from 'react-bootstrap-icons';
 import handleService from '../../services/handlers';
 import userService from '../../services/users';
@@ -23,7 +24,9 @@ export const Product = ({ product }) => {
       } 
     } 
     else {
-      alert('Iniciá sesión para guardar productos en el carrito');
+      toast('Iniciá sesión para guardar productos en el carrito', {
+        icon: '🔑',
+      });
     }
   }
 
@@ -40,7 +43,9 @@ export const Product = ({ product }) => {
         })
     }
     else {
-      alert('Iniciá sesión para guardar productos en favoritos');
+      toast('Iniciá sesión para guardar productos en favoritos', {
+        icon: '🔑',
+      });
     }
   }
 
