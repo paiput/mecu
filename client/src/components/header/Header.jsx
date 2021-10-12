@@ -52,7 +52,7 @@ export const Header = ({ hambMenuState, cartState }) => {
         </nav>
       </header>
       { cartContainer && <CartContainer />}
-      { hambMenu && <HambMenu /> }
+      <HambMenu hambMenu={hambMenu} />
     </>
   )
 }

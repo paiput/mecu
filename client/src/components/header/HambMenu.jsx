@@ -5,11 +5,11 @@ import * as Icon from 'react-bootstrap-icons';
 import { useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
 
-export const HambMenu = () => {
+export const HambMenu = ({ hambMenu }) => {
   const { user } = useContext(UserContext);
 
   return (
-    <div className="hamb-menu">
+    <div className={`hamb-menu ${hambMenu ? 'show-hamb-menu' : ''}`}>
     {
       user
         ? <>      
@@ -23,7 +23,6 @@ export const HambMenu = () => {
           <Link to="/register" className="hamb-menu__link"><Icon.PersonPlus />Registrarse</Link>
         </>
     }
-
     </div>    
   )
 }
