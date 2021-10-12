@@ -71,10 +71,6 @@ const App = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.username]); 
 
-  const getUser = () => {
-    console.log('usuario:', user);
-  }
-
   const handleClickOutsideMenus = (e) => {
     handleService.handleClickOutsideHambMenu(e, setHambMenu)
     handleService.handleClickOutsideCartContainer(e, setCartContainer)
@@ -86,7 +82,6 @@ const App = () => {
         <UserContext.Provider value={{ user, setUser }} >
           <CartContext.Provider value={{ cart, setCart }} >
             <Toaster />
-            <button onClick={getUser}>mostar usuario</button>
             <Header hambMenuState={{hambMenu, setHambMenu}} cartState={{cartContainer, setCartContainer}} />
             <main>
               <Switch>

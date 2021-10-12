@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { PublishedProduct } from './PublishedProduct';
 
 export const PublishedProducts = () => {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   return (
     user.products.length > 0 ? (
