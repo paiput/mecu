@@ -35,22 +35,24 @@ export const Balance = () => {
   }
 
   return (
-    <div>
+    <div className="balance-container">
       <h2>Tu saldo actual</h2>
       <h3>${handleService.numberWithCommas(user.balance)}</h3>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="amountToLoad">$</label>
-        <input 
-          type="number"
-          id="input__amount-to-load"
-          onKeyPress={filterNotNumbers}
-          {...register("amountToLoad", { 
-            required: true,
-            min: 1, 
-            max: 10000
-          })}
-        />
-        <button type="submit">Cargar saldo</button>
+      <form className="balance-form" onSubmit={handleSubmit(onSubmit)}>
+          <div className="product-price__container form-container__input balance__amount-to-load">
+            <span className="price-symbol">$</span>
+            <input 
+              type="number"
+              id="input__amount-to-load"
+              onKeyPress={filterNotNumbers}
+              {...register("amountToLoad", { 
+                required: true,
+                min: 1, 
+                max: 10000
+              })}
+            />
+          </div>
+        <button type="submit" className="text-button primary-button">Cargar saldo</button>
         {errors.amountToLoad?.type === 'max' && <InputMsg msg="La cantidad máxima de saldo que se puede cargar es de $10,000" />}
         {errors.amountToLoad?.type === 'min' && <InputMsg msg="No se puede cargar menos de $1" />}
       </form>
