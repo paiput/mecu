@@ -84,6 +84,10 @@ Router.post('/login', (req, res, next) => {
 // devuelve el usuario una vez iniciada la sesion
 Router.get('/user', (req, res) => {
   // req.user guarda todos los datos del usuario que inicia sesion
+  if (req.user === undefined) {
+    res.status(401).send('No hay sesion activa');
+    return;
+  }
   User.findOne({ username: req.user.username }) 
     .populate('products', {
       user: false // no devuelve el id del usuario por cada producto
@@ -150,7 +154,6 @@ Router.put('/users/:username/likes', (req, res) => {
       }
     });
 });
-
 
 // cierre de sesion del usuario
 Router.get('/logout', (req, res) => {

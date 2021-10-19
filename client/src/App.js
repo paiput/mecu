@@ -43,7 +43,7 @@ const App = () => {
         setUser(loggedUser.data);
       })
       .catch(err => {
-        console.log('Error when getting logged user:', err);
+        console.log(err.response.data);
       });
   }, []);
 
