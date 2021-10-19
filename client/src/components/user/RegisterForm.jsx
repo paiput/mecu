@@ -16,15 +16,14 @@ export const RegisterForm = () => {
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
 
   const onSubmit = data => {
-    const { username, name, surname, password } = data;
-    const userToRegister = { username, name, surname, password };
-    
-    registerService.register(userToRegister)
+    registerService.register(data)
       .then(createdUser => {
         setUser(createdUser.data);
-      });
-      
-    reset();
+        reset();
+      })
+      .catch(err => {
+        console.log(err.response.data);
+      })
   }  
   
   const renderRegisterForm = () => {
@@ -77,6 +76,17 @@ export const RegisterForm = () => {
             <PasswordEye isPasswordHidden={isPasswordHidden} setIsPasswordHidden={setIsPasswordHidden} />
           </div>
           {errors.password?.type === 'required' && <InputMsg msg="Este campo es requerido" />}
+        </div>
+        <div className="form-container__input-container">
+          <input 
+            className="form-container__input"
+            type="password"
+            placeholder="Confirmar contraseña"
+            {...register("passwordConfirm", { 
+              required: true
+            })}
+          />
+          {errors.passwordConfirm?.type === 'required' && <InputMsg msg="Este campo es requerido" />}
         </div>
         <button type="submit" className="text-button primary-button">Registrarse</button>
         <Link to="/login" className="form-link">Ya tengo cuenta</Link>

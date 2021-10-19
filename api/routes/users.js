@@ -39,12 +39,17 @@ Router.get('/users/:username', (req, res) => {
 
 // registro del usuario
 Router.post('/users', (req, res) => {
-  const { username, name, surname, password } = req.body;
+  const { username, name, surname, password, passwordConfirm } = req.body;
 
   User.findOne({ username }, async (err, user) => {
-    if (err) console.log('Error while checking if user already exists:', err);
-    if (user) res.status(400).send('User already exists');
+    if (err) res.status(500).send('Error interno del servidor, intente nuevamente');
+    if (user) res.status(400).send('El usuario ya existe');
     if (!user) {
+      if (password !== passwordConfirm) {
+        res.status(400).send('La confirmacion de la contraseña no coincide');
+        return;
+      }
+
       // el numero tiene que ver con la complejidad del hash
       const passwordHash = await bcrypt.hash(password, 10);
 

@@ -7,7 +7,7 @@ const register = credentials => {
   const request = axios.post(baseUrl, credentials);
   toast.promise(request, {
     loading: 'Cargando...',
-    error: 'Error al crear usuario, intente nuevamente',
+    error: err => `${err.response.data}`,
     success: res => `Bienvenid@, ${res.data.username}!`
   });
   return request;
