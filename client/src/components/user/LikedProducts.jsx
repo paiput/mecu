@@ -9,7 +9,7 @@ export const LikedProducts = () => {
   return (
     <div className="latest-products-container">
       {
-        user.likedProducts.length === 0 ? (
+        user && (user.likedProducts.length === 0 ? (
             <p>No hay productos guardados en favoritos</p>
           ) : (
             user.likedProducts.map(product => {
@@ -20,6 +20,7 @@ export const LikedProducts = () => {
               );
             })
           )
+        )
       }
     </div>
   )

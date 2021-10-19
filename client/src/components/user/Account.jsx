@@ -39,18 +39,18 @@ export const Account = () => {
       <div className="user-container__child user__profile">
         <div className="user__img-container">
           <img 
-            src={`https://avatars.dicebear.com/api/initials/${user.name}-${user.surname}.svg`}
+            src={user && `https://avatars.dicebear.com/api/initials/${user.name}-${user.surname}.svg`}
             onError={(e) => {e.target.onerror = null; e.target.src=`${userImg}`}}
             alt="perfil de usuario" 
             className="user__img" 
           />
         </div>
-        <h2>{user.username}</h2>
-        <h3>{user.name} {user.surname}</h3>
+        <h2>{user && user.username}</h2>
+        <h3>{user && user.name} {user && user.surname}</h3>
       </div>
       <div className="user-container__child user__balance-container">
         <h3>Billetera: </h3>
-        <h2>${handleService.numberWithCommas(user.balance)}</h2>
+        <h2>${user && handleService.numberWithCommas(user.balance)}</h2>
         <Link to="/account/balance" className="user__link">Cargar dinero</Link>
       </div>
       <div className="user-container__child">

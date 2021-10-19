@@ -37,7 +37,7 @@ export const Balance = () => {
   return (
     <div className="balance-container">
       <h2>Tu saldo actual</h2>
-      <h3>${handleService.numberWithCommas(user.balance)}</h3>
+      <h3>${user && handleService.numberWithCommas(user.balance)}</h3>
       <form className="balance-form" onSubmit={handleSubmit(onSubmit)}>
           <div className="product-price__container form-container__input balance__amount-to-load">
             <span className="price-symbol">$</span>
