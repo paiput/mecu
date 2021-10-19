@@ -38,7 +38,12 @@ export const Account = () => {
     <div className="user-container">
       <div className="user-container__child user__profile">
         <div className="user__img-container">
-          <img src={userImg} alt="perfil de usuario" className="user__img" />
+          <img 
+            src={`https://avatars.dicebear.com/api/initials/${user.name}-${user.surname}.svg`}
+            onError={(e) => {e.target.onerror = null; e.target.src=`${userImg}`}}
+            alt="perfil de usuario" 
+            className="user__img" 
+          />
         </div>
         <h2>{user.username}</h2>
         <h3>{user.name} {user.surname}</h3>
