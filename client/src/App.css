@@ -235,6 +235,10 @@ a {
   margin-bottom: 1.5rem;
 }
 
+.empty-cart-text {
+  text-align: center;
+}
+
 .cart-container button {
   width: 100%;
 }

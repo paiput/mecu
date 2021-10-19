@@ -25,7 +25,10 @@ export const CartContainer = () => {
           </div>
           <button onClick={handleEmptyCart} className="text-button primary-button">Vaciar carrito</button>
         </>
-        : <p>El carrito está vacío</p>}
+        : <div className="cart__products-container">
+          <p className="empty-cart-text">El carrito está vacío</p>
+          <img src="https://stampmarket.in/emptycart.gif" alt="pingüino" />  
+        </div>}
     </div>
   )
 }
