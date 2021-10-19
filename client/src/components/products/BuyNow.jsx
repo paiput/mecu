@@ -6,6 +6,7 @@ import userService from '../../services/users';
 // components
 import { InputMsg } from '../user/InputMsg';
 import * as Icon from 'react-bootstrap-icons';
+import toast from 'react-hot-toast';
 
 export const BuyNow = ({ setBuyNow, product }) => {
   const { user: loggedUser, setUser } = useContext(UserContext);
@@ -33,26 +34,25 @@ export const BuyNow = ({ setBuyNow, product }) => {
 
   const onSubmit = data => {
     const { amountToBuy } = data;
-    // handleProductPurchase devuelve un objeto de promesas que son los valores actualizados del producto y el usuario que lo compro
-    const { updatedUser, updatedProduct } = userService.handleProductPurchase(loggedUser, product, amountToBuy);
-
+    // handleProductPurchase devuelve un objeto de promesas que son los valores
+    // actualizados del producto y el usuario que lo compro y un posible error
+    const { updatedUser, updatedProduct, error } = userService.handleProductPurchase(loggedUser, product, amountToBuy);
+    
+    if (error) {
+      return toast.error('Saldo insuficiente');
+    } 
+    
     updatedUser
       .then(updatedUserBalance => {
         console.log('Balance del usuario comprador:', updatedUserBalance);
         setUser(userData => {
           return {...userData, balance: updatedUserBalance}
         })
-      })
-      .catch(err => {
-        alert('error con el usuario');
-      })
+      });
 
     updatedProduct
       .then(updatedProduct => {
-        console.log('Producto comprado:', updatedProduct);
-      })
-      .catch(err => {
-        alert('error con el producto');
+        toast.success('Producto comprado exitosamente');
       });
 
     reset();
