@@ -68,7 +68,11 @@ export const ProductDetails = () => {
 
   const handleBuyNow = () => {
     if (user) setBuyNow(true);
-    else if (!user) alert('Iniciá sesión para poder comprar un producto');
+    else if (!user) {
+      toast('Iniciá sesión para comprar productos', {
+        icon: '🔑',
+      });
+    }
   }
 
   const renderProductDetails = () => {
