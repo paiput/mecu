@@ -74,8 +74,8 @@ Router.post('/users', (req, res) => {
 // login del usuario
 Router.post('/login', (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
-    if (err) throw err;
-    if (!user) res.status(404).send('El usuario no existe');
+    if (err) res.status(500).send(err.message);
+    if (!user) res.status(400).send('Usuario o contraseña incorrectos');
     else {
       req.logIn(user, (err) => {
         if (err) throw err;
@@ -102,8 +102,8 @@ Router.get('/user', (req, res) => {
     })
     .exec((err, user) => {
       if (err) { 
-        console.log('Error finding logged user:', err).end(); 
-        res.status(500).send('Could not find logged user');
+        console.log('Error finding logged user:', err); 
+        res.status(500).send('No se pudo encontrar el usuario logueado');
       }
       res.status(200).json(user);
     });
@@ -168,7 +168,6 @@ Router.get('/logout', (req, res) => {
 
 // borrar cuenta del usuario
 Router.delete('/users/:userId', async (req, res) => {
-  console.log('req.params:', req.params);
   // borra todos los productos que haya publicado el usuario
   await Product.deleteMany({ user: { $in: req.params.userId } })
   await User.findByIdAndDelete(req.params.userId);
