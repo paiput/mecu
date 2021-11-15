@@ -1,14 +1,16 @@
+import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import productService from '../../services/products';
 // components
 import { InputMsg } from './InputMsg';
 // UserContext
-import { useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
 
 export const SellForm = () => {
   const { user: loggedUser } = useContext(UserContext);
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
+  const [fileInputState, setFileInputState] = useState('');
+  const [previewSource, setPreviewSource] = useState('');
 
   const filterBadInputs = (e) => {
     let inputValue = e.currentTarget.value;
@@ -29,12 +31,30 @@ export const SellForm = () => {
     if (e.which < 48 || e.which > 57) e.preventDefault();
   }
 
+  const handleFileInputChange = (e) => {
+    const file = e.target.files[0];
+    previewFile(file);
+    setFileInputState(e.target.value);
+  }
+
+  const previewFile = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setPreviewSource(reader.result);
+    }
+  }
+
   const onSubmit = data => {
+    if (previewSource) data = {...data, img: previewSource }
+    console.log('data:', data);
     const product = {...data, username: loggedUser.username}
     productService.postProduct(product)
       .then(product => {
         console.log('Product published:', product);
       });
+    setPreviewSource('');
+    setFileInputState('');
     reset();
   }
 
@@ -58,6 +78,17 @@ export const SellForm = () => {
           {errors.name?.type === 'required' && <InputMsg msg="Este campo es requerido" />}
           {errors.name?.type === 'minLength' && <InputMsg msg="No supera el mínimo de caracteres requeridos" />}
           {errors.name?.type === 'maxLength' && <InputMsg msg="Supera el límite de caracteres" />}
+        </div>
+        <div className="sell-form__input-container">
+          <label htmlFor="name">Imagen:</label>
+          <input 
+            className="form-container__input"
+            type="file"
+            id="input__product-img"
+            onChange={handleFileInputChange}
+            value={fileInputState}
+          />
+          {previewSource && <img src={previewSource} alt="imagen del producto" className="form-container__input"/>}
         </div>
         <div className="sell-form__input-container">
           <label htmlFor="description">Descripción:</label>
