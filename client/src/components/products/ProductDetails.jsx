@@ -85,7 +85,7 @@ export const ProductDetails = () => {
               ? <Icon.HeartFill className="icon big-icon heart"/>
               : <Icon.Heart className="icon big-icon heart"/>}
           </button>
-          <img className="product__img" src={emptyImg} alt="..." />
+          <img className="product__img" src={product.img || emptyImg} alt="..." />
         </div>
         <div className="product-details__text-container">
           <p className="product-details__description">{product.description}</p>

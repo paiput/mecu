@@ -53,7 +53,7 @@ export const Product = ({ product }) => {
     <>
       <div className="product__img-container">
         <Link to={`/products/${product._id}`}>
-          <img className="product__img" src={emptyImg} alt="..." />
+          <img className="product__img" src={product.img || emptyImg} alt="..." />
         </Link>
       </div>
       <div className="product-info">
