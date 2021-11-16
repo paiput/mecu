@@ -1,5 +1,6 @@
 const express = require('express');
 const Router = express.Router();
+const { cloudinary } = require('../cloudinary');
 
 const Product = require('../models/Product');
 const User = require('../models/User');
@@ -43,29 +44,35 @@ Router.get('/products/:id', (req, res) => {
 
 // post de un producto
 Router.post('/products', async (req, res) => {
-  const { name, description, price, quantity, username } = req.body;
+  const { name, img, description, price, quantity, username } = req.body;
 
-  const user = await User.findOne({ username });
+  // const user = await User.findOne({ username });
+  User.findOne({ username })
+    .exec((err, user) => {
+      if (err) res.status(500).json({ error: 'Error interno del servdior '});
+      if (!user) res.status(400).json({ error: 'Debes estar loggeado para publicar un producto '});
 
-  console.log('user:', user);
+      cloudinary.uploader.upload(img, { upload_preset: 'mecu_setups' })
+        .then(uploadedImg => {
+          const product = new Product({
+            name,
+            img: uploadedImg.url,
+            description,
+            price,
+            quantity,
+            user
+          });
 
-  const product = new Product({
-    name,
-    description,
-    price,
-    quantity,
-    user
-  });
-
-  product.save(async (err, savedProduct) => {
-    if (err) {
-      console.log('Error saving product:', err);
-      res.status(500).end();
-    }
-    user.products = user.products.concat(savedProduct); // removi el ._id a ver q pasa
-    await user.save();
-    res.status(201).json(savedProduct);
-  });
+          product.save((err, savedProduct) => {
+            if (err) res.status(500).json({ error: 'Guardar el producto en la base de datos' });
+            user.products = user.products.concat(savedProduct); 
+            user.save((err, savedUser) => {
+              if (err) res.status(500).json({ error: 'Error al modificar el usuario' });
+              res.status(201).json(savedProduct);
+            });
+          });
+      });
+    });
 });
 
 // compra de un producto
