@@ -46,33 +46,32 @@ Router.get('/products/:id', (req, res) => {
 Router.post('/products', async (req, res) => {
   const { name, img, description, price, quantity, username } = req.body;
 
-  // const user = await User.findOne({ username });
-  User.findOne({ username })
-    .exec((err, user) => {
-      if (err) res.status(500).json({ error: 'Error interno del servdior '});
-      if (!user) res.status(400).json({ error: 'Debes estar loggeado para publicar un producto '});
+  const user = await User.findOne({ username });
 
-      cloudinary.uploader.upload(img, { upload_preset: 'mecu_setups' })
-        .then(uploadedImg => {
-          const product = new Product({
-            name,
-            img: uploadedImg.url,
-            description,
-            price,
-            quantity,
-            user
-          });
+  let imgUrl = '';
 
-          product.save((err, savedProduct) => {
-            if (err) res.status(500).json({ error: 'Guardar el producto en la base de datos' });
-            user.products = user.products.concat(savedProduct); 
-            user.save((err, savedUser) => {
-              if (err) res.status(500).json({ error: 'Error al modificar el usuario' });
-              res.status(201).json(savedProduct);
-            });
-          });
-      });
-    });
+  if (img) {
+    try {
+      uploeadedImg = await cloudinary.uploader.upload(img, { upload_preset: 'mecu_setups' });
+      imgUrl = uploeadedImg.url;
+    } catch (err) {
+      return res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  } 
+
+  const product = new Product({
+    name,
+    img: imgUrl,
+    description,
+    price,
+    quantity,
+    user
+  });
+
+  const savedProduct = await product.save();
+  await user.products.concat(savedProduct);
+
+  res.status(201).json(savedProduct);
 });
 
 // compra de un producto
