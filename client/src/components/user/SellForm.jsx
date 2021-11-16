@@ -7,7 +7,7 @@ import { InputMsg } from './InputMsg';
 import { UserContext } from '../../contexts/UserContext';
 
 export const SellForm = () => {
-  const { user: loggedUser } = useContext(UserContext);
+  const { user: loggedUser, setUser } = useContext(UserContext);
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const [fileInputState, setFileInputState] = useState('');
   const [previewSource, setPreviewSource] = useState('');
@@ -52,6 +52,13 @@ export const SellForm = () => {
     productService.postProduct(product)
       .then(product => {
         console.log('Product published:', product);
+        setUser(user => { 
+          return {
+            ...user, 
+            products: [...user.products, product],
+            likedProducts: user.likedProducts, 
+          } 
+        });
       });
     setPreviewSource('');
     setFileInputState('');
