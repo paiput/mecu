@@ -14,8 +14,8 @@ Router.get('/users', (req, res) => {
     })
     .exec((err, users) => {
       if (err) { 
-        console.log('Error finding users:', err).end(); 
-        res.status(500).send('Could not find users');
+        console.error('Error finding users:', err); 
+        return res.status(500).json({ error: 'Error interno del servidor' });
       }
       res.status(200).json(users);
     });
@@ -30,8 +30,8 @@ Router.get('/users/:username', (req, res) => {
     })
     .exec((err, user) => {
       if (err) { 
-        console.log('Error finding user:', err).end(); 
-        res.status(500).send('Could not find user');
+        console.error('Error finding user:', err); 
+        return res.status(500).json({ error: 'Error interno del servidor' });
       }
       res.status(200).json(user);
     });
@@ -42,12 +42,17 @@ Router.post('/users', (req, res) => {
   const { username, name, surname, password, passwordConfirm } = req.body;
 
   User.findOne({ username }, async (err, user) => {
-    if (err) res.status(500).send('Error interno del servidor, intente nuevamente');
-    if (user) res.status(400).send('El usuario ya existe');
+    if (err) {
+      console.error('Error when registering new user:', err);
+      return res.status(500).send('Error interno del servidor, intente nuevamente');
+    }
+    if (user) {
+      console.error('User already exists');      
+      return res.status(400).send('El usuario ya existe');
+    }
     if (!user) {
       if (password !== passwordConfirm) {
-        res.status(400).send('La confirmacion de la contraseña no coincide');
-        return;
+        return res.status(400).send('La confirmacion de la contraseña no coincide');
       }
 
       // el numero tiene que ver con la complejidad del hash
@@ -62,8 +67,8 @@ Router.post('/users', (req, res) => {
 
       user.save((err, savedUser) => {
         if (err) {
-          console.log('Error saving user:', err);
-          res.status(500).end();
+          console.error('Error saving user:', err);
+          return res.status(500).send('Error al guardar el usuario en la base de datos');
         }
         res.status(201).json(savedUser);
       });
@@ -74,15 +79,19 @@ Router.post('/users', (req, res) => {
 // login del usuario
 Router.post('/login', (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
-    if (err) res.status(500).send(err.message);
-    if (!user) res.status(400).send('Usuario o contraseña incorrectos');
-    else {
-      req.logIn(user, (err) => {
-        if (err) throw err;
-        res.send(user.name);
-        console.log('Logged succesfuly as', req.user.username);
-      });
+    if (err) {
+      console.error('Error on login authentication:', err);
+      return res.status(500).send('Error interno del servidor');
+    };
+    if (!user) {
+      console.error('Incorrect username or password');
+      return res.status(400).send('Usuario o contraseña incorrectos');
     }
+    req.logIn(user, (err) => {
+      if (err) throw err;
+      console.log('Logged succesfuly as', req.user.username);
+      res.send(user.name);
+    });
   })(req, res, next);
 });
 
@@ -90,8 +99,7 @@ Router.post('/login', (req, res, next) => {
 Router.get('/user', (req, res) => {
   // req.user guarda todos los datos del usuario que inicia sesion
   if (req.user === undefined) {
-    res.status(401).send('No hay sesion activa');
-    return;
+    return res.status(401).send('No hay sesion activa');
   }
   User.findOne({ username: req.user.username }) 
     .populate('products', {
@@ -102,8 +110,8 @@ Router.get('/user', (req, res) => {
     })
     .exec((err, user) => {
       if (err) { 
-        console.log('Error finding logged user:', err); 
-        res.status(500).send('No se pudo encontrar el usuario logueado');
+        console.error('Error finding logged user:', err); 
+        return res.status(500).send('No se pudo encontrar el usuario logueado');
       }
       res.status(200).json(user);
     });
@@ -116,17 +124,17 @@ Router.put('/users/:username/balance', (req, res) => {
   User.findOne({ username: req.params.username })
     .exec((err, user) => {
       if (err) { 
-        console.log('Error updating user balance:', err); 
-        res.status(500).send('Could not update balance');
+        console.error('Error updating user balance:', err); 
+        return res.status(500).send('Error interno del servidor');
       }
 
       user.balance += Number(amountToLoad);
 
       user.save((err, updatedUser) => {
         if (err) {
-            console.log('Error saving user:', err);
-            res.status(500).end();
-          }
+          console.log('Error saving user:', err);
+          return res.status(500).send('Error interno del servidor');
+        }
         res.status(201).json(updatedUser.balance);
       });
     });
@@ -139,8 +147,13 @@ Router.put('/users/:username/likes', (req, res) => {
   User.findOne({ username: req.params.username })
     .populate('likedProducts')
     .exec(async (err, user) => {
-      if (err) throw err;
-      if (!user) console.log('User not found');
+      if (err) {
+        res.status(500).send('Error interno del servidor');
+      };
+      if (!user) {
+        console.error('User not found');
+        res.send('No se pudo encontrar al usuario')
+      }
 
       if (user.likedProducts.some(product => product._id.toString() === likedProduct._id)) {
         const filteredProducts = user.likedProducts.filter(product => product._id.toString() !== likedProduct._id);
@@ -163,7 +176,7 @@ Router.put('/users/:username/likes', (req, res) => {
 // cierre de sesion del usuario
 Router.get('/logout', (req, res) => {
   req.logOut();
-  res.send('User logged out succesfully');
+  res.send('Sesion cerrada exitosamente');
 });
 
 // borrar cuenta del usuario
@@ -171,7 +184,7 @@ Router.delete('/users/:userId', async (req, res) => {
   // borra todos los productos que haya publicado el usuario
   await Product.deleteMany({ user: { $in: req.params.userId } })
   await User.findByIdAndDelete(req.params.userId);
-  res.send('User account deleted succefully');
+  res.send('Cuenta borrada exitosamente');
 });
 
 // borrar despues

@@ -13,8 +13,8 @@ Router.get('/products', (req, res) => {
     })
     .exec((err, products) => {
       if (err) { 
-        console.log('Error finding products:', err).end(); 
-        res.status(500).send('Could not find products');
+        console.error('Error finding products:', err); 
+        return res.status(500).send('Error interno del servidor');
       }
       res.status(200).json(products);
     });
@@ -26,10 +26,13 @@ Router.get('/products/:id', (req, res) => {
     .populate('user')
     .exec(async (err, product) => {
       if (err) {
-        console.log('Error finding product:', err);
-        res.end();
+        console.error('Error finding product:', err);
+        return res.status(500).send('Error interno del servidor');
       }
-      if (!product) res.status(404).json({ msg: 'Not found' });
+      if (!product) {
+        console.error('Product not found');
+        return res.status(404).send('Producto no encontrado');
+      }
 
       const user = await User.findOne({ username: product.user.username }).populate('products');
       
@@ -55,7 +58,8 @@ Router.post('/products', async (req, res) => {
       uploeadedImg = await cloudinary.uploader.upload(img, { upload_preset: 'mecu_setups' });
       imgUrl = uploeadedImg.url;
     } catch (err) {
-      return res.status(500).json({ error: 'Error interno del servidor' });
+      console.error('Error while saving img to cloudinary:', err);
+      return res.status(500).send('Error al guardar la imagen del producto');
     }
   } 
 
@@ -79,12 +83,21 @@ Router.put('/products/:id', (req, res) => {
   const { amountToBuy } = req.body;
   Product.findById(req.params.id)
     .exec((err, product) => {
-      if (err) console.log('uy, error', err);
-      if (!product) console.log('no se encontro pa');
+      if (err) {
+        console.error('Error when finding product:', err);
+        return res.status(500).send('Error interno del servidor');
+      }
+      if (!product) {
+        console.error('Product not found');
+        return res.status(404).send('Producto no encontrado');
+      }
       
       product.quantity -= Number(amountToBuy);
       product.save((err, updatedProduct) => {
-        if (err) console.log('Error al actualizar cantidad:', err);
+        if (err) {
+          console.error('Error when updating product:', err);
+          return res.status(500).send('Error al actualizar producto');
+        }
         res.status(200).json(updatedProduct);
       });
     });
@@ -107,10 +120,13 @@ Router.delete('/products/:id', (req, res) => {
   Product.deleteOne({ _id: req.params.id })
     .exec((err, product) => {
       if (err) {
-        console.log('Error deleting product:', err);
-        res.status(500).end();
+        console.error('Error when deleting product:', err);
+        return res.status(500).send('Error interno del servidor');
       }
-      if (!product) res.status(404).json({ msg: 'Not found' });
+      if (!product) {
+        console.error('Product not found');
+        return res.status(404).send('Producto no encontrado');
+      }
       res.status(204).send('Product deleted succesfully');
     });
 });
