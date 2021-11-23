@@ -35,12 +35,13 @@ export const Header = ({ hambMenuState, cartState }) => {
             <button type="submit"><Icon.Search className="icon normal-icon" /></button>
             <input type="text" placeholder="Buscar productos..."></input>
           </form>
+          { window.innerWidth >= 769 && <HambMenu hambMenu={hambMenu} />}
           <div className="tools-container">
-            <div className={`nav__hamburger ${hambMenu ? 'change-to-cross' : ''}`} onClick={(handleShowHambMenu)} >
+            {window.innerWidth <= 769 && <div className={`nav__hamburger ${hambMenu ? 'change-to-cross' : ''}`} onClick={(handleShowHambMenu)} >
               <div className="nav__hamburger-child"></div>
               <div className="nav__hamburger-child"></div>
               <div className="nav__hamburger-child"></div>
-            </div>
+            </div>}
             <button className="cart-button" onClick={handleShowCart}>
               <Icon.Cart className="icon big-icon" />
               {cart.length === 0
@@ -52,7 +53,7 @@ export const Header = ({ hambMenuState, cartState }) => {
         </nav>
       </header>
       { cartContainer && <CartContainer />}
-      <HambMenu hambMenu={hambMenu} />
+      { window.innerWidth <= 768 && <HambMenu hambMenu={hambMenu} />}
     </>
   )
 }
