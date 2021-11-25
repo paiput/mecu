@@ -1,15 +1,16 @@
 import { LatestProduct } from "./LatestProduct"
 
-export const RelatedProducts = ({ product }) => {
-  console.log('related products:', product.user.products)
+export const RelatedProducts = ({ user, products }) => {
+  console.log('related products:', products)
+  console.log('related products publisher:', user);
   return (
-    product.user.products.length > 0 ? (
+    products.length > 0 ? (
       <>
         <hr />
         <div className="related-products">
-          <h3 className="related-products__title">Otros productos publicados por {product.user.username}</h3>
+          <h3 className="related-products__title">Otros productos publicados por {user}</h3>
           <div className="related-products-container">
-            {product.user.products.map(product => {
+            {products.map(product => {
               return <LatestProduct product={product} key={product._id} />
             })}
           </div>

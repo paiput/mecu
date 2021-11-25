@@ -29,7 +29,7 @@ export const ProductDetails = () => {
       setLoading(false);
       document.title = fetchedProduct.name
       window.scrollTo(0, 0); // scrollea hacia arriba para que se vea el producto seleccionado
-      console.log('product publisher:', fetchedProduct.user)
+      console.log('fetched product:', fetchedProduct)
     });
   }, [id, user?.balance]);
 
@@ -119,7 +119,7 @@ export const ProductDetails = () => {
               )}
           </div>
         </div>
-        <RelatedProducts product={product} />
+        <RelatedProducts user={product.user.name} products={product.user.products} />
         {buyNow && <BuyNow setBuyNow={setBuyNow} product={product} />}
       </>
     )
