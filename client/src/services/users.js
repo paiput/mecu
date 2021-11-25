@@ -2,6 +2,11 @@ const axios = require('axios');
 
 const baseUrl = '/api/users';
 
+const getUserProducts = (username) => {
+  const request = axios.get(`${baseUrl}/${username}`);
+  return request.then(res => res.data.products);
+}
+
 const updateUserBalance = (username, amountToLoad) => {
   const request = axios.put(`${baseUrl}/${username}/balance`, amountToLoad);
   return request.then(res => res.data);
@@ -28,6 +33,6 @@ const handleProductPurchase = (user, product, amountToBuy) => {
   return requests;
 }
 
-const exportableFunctions = { updateUserBalance, handleProductLike, handleProductPurchase };
+const exportableFunctions = { getUserProducts, updateUserBalance, handleProductLike, handleProductPurchase };
 
 export default exportableFunctions;
