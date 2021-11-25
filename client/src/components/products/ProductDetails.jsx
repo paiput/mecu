@@ -119,7 +119,7 @@ export const ProductDetails = () => {
               )}
           </div>
         </div>
-        <RelatedProducts user={product.user.name} products={product.user.products} />
+        <RelatedProducts user={product.user.username} />
         {buyNow && <BuyNow setBuyNow={setBuyNow} product={product} />}
       </>
     )
