@@ -4,18 +4,15 @@ import {
   Switch,
   Route
 } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import './App.css';
-import productService from './services/products';
 import handleService from './services/handlers';
-import loginService from './services/login';
 import { UserContext } from './contexts/UserContext'; // contexto del usuario
 import { CartContext } from './contexts/CartContext'; // contexto del carrito del usuario
 // components
 import { Toaster } from 'react-hot-toast';
 import { Header } from './components/header/Header';
-import { FeaturedProduct } from './components/products/FeaturedProduct';
-import { LatestProducts } from './components/products/LatestProducts';
+import { MainMenu } from './components/user/MainMenu';
 import { ProductDetails } from './components/products/ProductDetails';
 import { SellForm } from './components/user/SellForm';
 import { RegisterForm } from './components/user/RegisterForm';
@@ -24,52 +21,15 @@ import { Account } from './components/user/Account';
 import { PublishedProducts } from './components/user/PublishedProducts';
 import { Balance } from './components/user/Balance';
 import { LikedProducts } from './components/user/LikedProducts';
+import { PurchasedProducts } from './components/user/PurchasedProducts';
 
 const App = () => {
   const [user, setUser] = useState(null); // estado global del usuario
   const [cart, setCart] = useState([]); // estado global del carrito del usuario
-  const [products, setProducts] = useState([]);
-  const [randomProduct, setRandomProduct] = useState({});
-  const [loading, setLoading] = useState(true);
 
   // estados para detectar clicks fuera de los menúes desplegables
   const [hambMenu, setHambMenu] = useState(false);
   const [cartContainer, setCartContainer] = useState(false);
-
-  // se fija si el usuario sigue loggeado la primera vez que App renderiza
-  useEffect(() => {
-    loginService.getLoggedUser()
-      .then(loggedUser => {
-        setUser(loggedUser.data);
-      })
-      .catch(err => {
-        console.log(err.response.data);
-      });
-  }, []);
-
-  // renderiza los productos, y en cuanto se loguea un usuario filtra sus productos publicados
-  useEffect(() => {
-    productService.getAll()
-      .then(fetchedProducts => {
-        console.log('Products fetched');
-
-        if (user) {
-          console.log(user.username)
-          const filteredProducts = fetchedProducts.filter(product => product.user.username !== user.username);
-          setProducts(filteredProducts);
-          setRandomProduct(filteredProducts[Math.floor(Math.random() * filteredProducts.length)])
-        } 
-        else {
-          setProducts(fetchedProducts);
-          setRandomProduct(fetchedProducts[Math.floor(Math.random() * fetchedProducts.length)]);
-        }
-
-        setLoading(false);
-      });
-  // el useEffect se ejecuta cada vez que se loguee un usuario o cierre sesión
-  // el comentario de abajo es para desactivar una advertencia del eslint
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user?.username]); 
 
   const handleClickOutsideMenus = (e) => {
     handleService.handleClickOutsideHambMenu(e, setHambMenu)
@@ -86,16 +46,7 @@ const App = () => {
             <main>
               <Switch>
                 <Route exact path="/">
-                  {loading ? (
-                    'Cargando...'
-                  ) : products.length === 0 ? (
-                    <p>Aún no hay productos publicados, sé el primero.</p>
-                  ) : ( 
-                    <>
-                      <FeaturedProduct product={randomProduct} />
-                      <LatestProducts products={products} />
-                    </>
-                  )}
+                  <MainMenu />
                 </Route>
                 <Route path="/products/:id">
                   <ProductDetails />
@@ -121,8 +72,14 @@ const App = () => {
                 <Route path="/account/publishedproducts">
                   <PublishedProducts />
                 </Route>
+                <Route path="/account/purchasedproducts">
+                  <PurchasedProducts />
+                </Route>
                 <Route path="/">
-                  <h2>Not found</h2>
+                  <div>
+                    <p>Esta no parece ser la página que estás buscando</p>
+                    <img src="https://static.tumblr.com/58d9c77e9619492c680de2a9772bcb51/txjgy5i/2HNoujzqj/tumblr_static_tumblr_static__640.gif" alt="gif" />
+                  </div>
                 </Route>
               </Switch>
             </main>
