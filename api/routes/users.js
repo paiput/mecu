@@ -15,7 +15,7 @@ Router.get('/users', (req, res) => {
     .exec((err, users) => {
       if (err) { 
         console.error('Error finding users:', err); 
-        return res.status(500).json({ error: 'Error interno del servidor' });
+        return res.status(500).send('Error interno del servidor');
       }
       res.status(200).json(users);
     });
@@ -23,7 +23,7 @@ Router.get('/users', (req, res) => {
 
 // get a un usuario especifico
 Router.get('/users/:username', (req, res) => {
-  User.find({ username: req.params.username })
+  User.findOne({ username: req.params.username })
     .populate('products', {
       // no retorna el id del usuario
       user: false
@@ -31,7 +31,7 @@ Router.get('/users/:username', (req, res) => {
     .exec((err, user) => {
       if (err) { 
         console.error('Error finding user:', err); 
-        return res.status(500).json({ error: 'Error interno del servidor' });
+        return res.status(500).send('Error interno del servidor');
       }
       res.status(200).json(user);
     });
