@@ -34,6 +34,8 @@ export const Account = () => {
       });
   }
 
+  if (!user) return 'Cargando...'; // hacer esqueleto
+
   return (
     <div className="user-container">
       <div className="user-container__child user__profile">
@@ -59,7 +61,7 @@ export const Account = () => {
       <div className="user-container__child user__links">
         <Link to="/account/publishedproducts" className="user__link">Mis publicaciones</Link>
         <Link to="/account/purchasedproducts" className="user__link">Historial de compra</Link>
-        <Link to="/account/productssold" className="user__link">Historial de venta</Link>
+        <Link to="/account/soldproducts" className="user__link">Historial de venta</Link>
       </div>
       <div className="user-container__child danger-buttons-container">
         <button className="text-button secondary-danger-button" onClick={handleLogout}>Cerrar sesión</button>

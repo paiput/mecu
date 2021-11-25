@@ -1,6 +1,7 @@
 import { LatestProduct } from "./LatestProduct"
 
 export const RelatedProducts = ({ product }) => {
+  console.log('related products:', product.user.products)
   return (
     product.user.products.length > 0 ? (
       <>

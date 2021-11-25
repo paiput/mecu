@@ -2,28 +2,16 @@
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import productService from '../../services/products';
-import loginService from '../../services/login';
 // components
 import { FeaturedProduct } from '../products/FeaturedProduct';
 import { LatestProducts } from '../products/LatestProducts';
 
 export const MainMenu = () => {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const [products, setProducts] = useState([]);
   const [randomProduct, setRandomProduct] = useState({});
   const [loading, setLoading] = useState(true);
-
-  // se fija si el usuario sigue loggeado la primera vez que App renderiza
-  useEffect(() => {
-    loginService.getLoggedUser()
-      .then(loggedUser => {
-        setUser(loggedUser.data);
-      })
-      .catch(err => {
-        console.log(err.response.data);
-      });
-  });
 
   // renderiza los productos, y en cuanto se loguea un usuario filtra sus productos publicados
   useEffect(() => {

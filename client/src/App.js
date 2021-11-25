@@ -4,9 +4,10 @@ import {
   Switch,
   Route
 } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import handleService from './services/handlers';
+import loginService from './services/login';
 import { UserContext } from './contexts/UserContext'; // contexto del usuario
 import { CartContext } from './contexts/CartContext'; // contexto del carrito del usuario
 // components
@@ -30,6 +31,17 @@ const App = () => {
   // estados para detectar clicks fuera de los menúes desplegables
   const [hambMenu, setHambMenu] = useState(false);
   const [cartContainer, setCartContainer] = useState(false);
+
+  // se fija si el usuario sigue loggeado la primera vez que App renderiza
+  useEffect(() => {
+    loginService.getLoggedUser()
+      .then(loggedUser => {
+        setUser(loggedUser.data);
+      })
+      .catch(err => {
+        console.log(err.response.data);
+      });
+  }, []);
 
   const handleClickOutsideMenus = (e) => {
     handleService.handleClickOutsideHambMenu(e, setHambMenu)

@@ -3,7 +3,7 @@ import { UserContext } from "../../contexts/UserContext";
 import { Product } from "../products/Product";
 
 export const PurchasedProducts = () => {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   return (
     <div>
