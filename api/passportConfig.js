@@ -14,7 +14,7 @@ module.exports = (passport) => {
           if (err) return done(err);
           if (result === true ) return done(null, user);
           else return done(null, false, { message: 'Contraseña incorrecta.' });
-        })
+        });
       });
     }
   ));
@@ -28,4 +28,4 @@ module.exports = (passport) => {
       done(err, user);
     });
   });
-}
+};

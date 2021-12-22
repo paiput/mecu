@@ -55,7 +55,7 @@ Router.post('/products', async (req, res) => {
 
   if (img) {
     try {
-      uploeadedImg = await cloudinary.uploader.upload(img, { upload_preset: 'mecu_setups' });
+      const uploeadedImg = await cloudinary.uploader.upload(img, { upload_preset: 'mecu_setups' });
       imgUrl = uploeadedImg.url;
     } catch (err) {
       console.error('Error while saving img to cloudinary:', err);
@@ -107,13 +107,13 @@ Router.put('/products/:id', (req, res) => {
 Router.delete('/products', (req, res) => {
   Product.deleteMany({})
     .then(deletedProducts => {
-      console.log('response:', deletedProducts)
+      console.log('response:', deletedProducts);
       res.status(204).send('All products deleted succesfully');
     })
     .catch(err => {
       console.log('error:', err);
       res.status(500).end();
-    })
+    });
 });
 // corregir despues también
 Router.delete('/products/:id', (req, res) => {

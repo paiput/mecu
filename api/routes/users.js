@@ -78,11 +78,11 @@ Router.post('/users', (req, res) => {
 
 // login del usuario
 Router.post('/login', (req, res, next) => {
-  passport.authenticate('local', (err, user, info) => {
+  passport.authenticate('local', (err, user) => {
     if (err) {
       console.error('Error on login authentication:', err);
       return res.status(500).send('Error interno del servidor');
-    };
+    }
     if (!user) {
       console.error('Incorrect username or password');
       return res.status(400).send('Usuario o contraseña incorrectos');
@@ -149,10 +149,10 @@ Router.put('/users/:username/likes', (req, res) => {
     .exec(async (err, user) => {
       if (err) {
         res.status(500).send('Error interno del servidor');
-      };
+      }
       if (!user) {
         console.error('User not found');
-        res.send('No se pudo encontrar al usuario')
+        res.send('No se pudo encontrar al usuario');
       }
 
       if (user.likedProducts.some(product => product._id.toString() === likedProduct._id)) {
@@ -182,7 +182,7 @@ Router.get('/logout', (req, res) => {
 // borrar cuenta del usuario
 Router.delete('/users/:userId', async (req, res) => {
   // borra todos los productos que haya publicado el usuario
-  await Product.deleteMany({ user: { $in: req.params.userId } })
+  await Product.deleteMany({ user: { $in: req.params.userId } });
   await User.findByIdAndDelete(req.params.userId);
   res.send('Cuenta borrada exitosamente');
 });
@@ -191,13 +191,13 @@ Router.delete('/users/:userId', async (req, res) => {
 Router.delete('/users', (req, res) => {
   User.deleteMany({})
     .then(res => {
-      console.log('response:', res)
+      console.log('response:', res);
       res.json(res);
     })
     .catch(err => {
       console.log('error:', err);
       res.status(500).end();
-    })
+    });
 });
 
 module.exports = Router;

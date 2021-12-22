@@ -24,7 +24,7 @@ mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useFindA
   });
    
 // passport
-app.use(session({ secret: 'secret', resave: true, saveUninitialized: true }))
+app.use(session({ secret: 'secret', resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 require('./api/passportConfig')(passport);
