@@ -23,8 +23,8 @@ export const RegisterForm = () => {
       })
       .catch(err => {
         console.log(err.response.data);
-      })
-  }  
+      });
+  };
   
   const renderRegisterForm = () => {
     return (
@@ -35,7 +35,7 @@ export const RegisterForm = () => {
             className="form-container__input"
             type="text"
             placeholder="Nombre"
-            {...register("name", { 
+            {...register('name', { 
               required: true
             })}
           />
@@ -46,7 +46,7 @@ export const RegisterForm = () => {
             className="form-container__input"
             type="text"
             placeholder="Apellido"
-            {...register("surname", { 
+            {...register('surname', { 
               required: true
             })}
           />
@@ -57,7 +57,7 @@ export const RegisterForm = () => {
             className="form-container__input"
             type="text"
             placeholder="Usuario"
-            {...register("username", { 
+            {...register('username', { 
               required: true
             })}
           />
@@ -67,9 +67,9 @@ export const RegisterForm = () => {
           <div className="password-input-container">
             <input 
               className="form-container__input"
-              type={ isPasswordHidden ? "password" : "text" }
+              type={ isPasswordHidden ? 'password' : 'text' }
               placeholder="Contraseña"
-              {...register("password", { 
+              {...register('password', { 
                 required: true
               })}
             />
@@ -82,7 +82,7 @@ export const RegisterForm = () => {
             className="form-container__input"
             type="password"
             placeholder="Confirmar contraseña"
-            {...register("passwordConfirm", { 
+            {...register('passwordConfirm', { 
               required: true
             })}
           />
@@ -91,8 +91,8 @@ export const RegisterForm = () => {
         <button type="submit" className="text-button primary-button">Registrarse</button>
         <Link to="/login" className="form-link">Ya tengo cuenta</Link>
       </form>
-    )
-  }
+    );
+  };
 
   return user ? <Redirect to="/" /> : renderRegisterForm();
-}
+};

@@ -1,8 +1,8 @@
 // imports
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import userService from '../../services/users';
 // components
-import { LatestProduct } from "./LatestProduct"
+import { LatestProduct } from './LatestProduct';
 
 export const RelatedProducts = ({ user }) => {
   const [relatedProducts, setRelatedProducts] = useState([]);
@@ -11,7 +11,7 @@ export const RelatedProducts = ({ user }) => {
     userService.getUserProducts(user)
       .then(products => {
         setRelatedProducts(products);
-      })
+      });
   }, [user]);
 
   return (
@@ -22,11 +22,11 @@ export const RelatedProducts = ({ user }) => {
           <h3 className="related-products__title">Otros productos publicados por {user}</h3>
           <div className="related-products-container">
             {relatedProducts.map(product => {
-              return <LatestProduct product={product} key={product._id} />
+              return <LatestProduct product={product} key={product._id} />;
             })}
           </div>
         </div>
       </>
-      ) : ''
-  )
-}
+    ) : ''
+  );
+};

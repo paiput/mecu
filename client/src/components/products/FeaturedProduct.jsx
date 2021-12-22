@@ -8,5 +8,5 @@ export const FeaturedProduct = ({ product }) => {
       </div>
       <Product product={product} />
     </div>
-  )
-}
+  );
+};

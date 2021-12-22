@@ -19,13 +19,13 @@ export const LoginForm = () => {
     const { username, password } = data;
 
     loginService.login({ username, password })
-      .then(async res => {
+      .then(async () => {
         const loggedUser = await loginService.getLoggedUser();
         setUser(loggedUser.data);
       });
       
     reset();
-  }  
+  };  
 
   const renderLogInForm = () => {
     return (
@@ -36,7 +36,7 @@ export const LoginForm = () => {
             className="form-container__input"
             type="text"
             placeholder="Usuario"
-            {...register("username", { 
+            {...register('username', { 
               required: true
             })}
           />
@@ -46,9 +46,9 @@ export const LoginForm = () => {
           <div className="password-input-container">
             <input 
               className="form-container__input"
-              type={ isPasswordHidden ? "password" : "text" }
+              type={ isPasswordHidden ? 'password' : 'text' }
               placeholder="Contraseña"
-              {...register("password", { 
+              {...register('password', { 
                 required: true
               })}
             />
@@ -59,8 +59,8 @@ export const LoginForm = () => {
         <button type="submit" className="text-button primary-button">Iniciar sesión</button>
         <Link to="/register" className="form-link">Aún no tengo cuenta</Link>
       </form>
-    )
-  }
+    );
+  };
 
   return user ? <Redirect to="/" /> : renderLogInForm();
-}
+};

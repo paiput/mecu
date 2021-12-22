@@ -5,5 +5,5 @@ export const InputMsg = ({ msg }) => {
     <div className="input-msg-container">
       <Icon.ExclamationCircle /><p>{msg}</p>
     </div>
-  )
-}
+  );
+};

@@ -16,7 +16,7 @@ export const BuyNow = ({ setBuyNow, product }) => {
     if (!e.target.classList.contains('buy-now-container') && !e.target.parentElement.classList.contains('buy-now-container') && !e.target.parentElement.parentElement.classList.contains('buy-now-container')) {
       setBuyNow(false);
     }
-  }
+  };
   
   useEffect(() => {
     // Vincula el detector de clicks
@@ -24,13 +24,13 @@ export const BuyNow = ({ setBuyNow, product }) => {
     return () => {
       // Desvincula el detector de clicks
       document.removeEventListener('click', handleClickOutside, true);
-    }
+    };
   });
 
   // filtra caracteres que no sean numeros
   const filterNotNumbers = (e) => {
     if (e.which < 48 || e.which > 57) e.preventDefault();
-  }
+  };
 
   const onSubmit = data => {
     const { amountToBuy } = data;
@@ -46,18 +46,18 @@ export const BuyNow = ({ setBuyNow, product }) => {
       .then(updatedUserBalance => {
         console.log('Balance del usuario comprador:', updatedUserBalance);
         setUser(userData => {
-          return {...userData, balance: updatedUserBalance}
-        })
+          return {...userData, balance: updatedUserBalance};
+        });
       });
 
     updatedProduct
-      .then(updatedProduct => {
+      .then(() => {
         toast.success('Producto comprado exitosamente');
       });
 
     reset();
     setBuyNow(false);
-  }
+  };
 
   return (
     <div className="buy-now-container__shadow">
@@ -77,7 +77,7 @@ export const BuyNow = ({ setBuyNow, product }) => {
             id="input__product-amount-to-buy"
             onKeyPress={filterNotNumbers}
             defaultValue={1}
-            {...register("amountToBuy", { 
+            {...register('amountToBuy', { 
               min: 1, 
               max: product.quantity
             })}
@@ -90,5 +90,5 @@ export const BuyNow = ({ setBuyNow, product }) => {
         </button>
       </form>
     </div>
-  )
-}
+  );
+};

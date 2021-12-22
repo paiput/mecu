@@ -7,5 +7,5 @@ export const PublishedProduct = ({ product }) => {
       <p>quedan {product.quantity}</p>
       <button className="primary-danger-button text-button">Borrar publicacion</button>
     </div>
-  )
-}
+  );
+};

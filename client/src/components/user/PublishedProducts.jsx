@@ -11,7 +11,7 @@ export const PublishedProducts = () => {
     user.products.length > 0 ? (
       <div className="published-products-container">
         {user.products.map(product => {
-          return <PublishedProduct product={product} key={product._id} />
+          return <PublishedProduct product={product} key={product._id} />;
         })}
       </div>
     ) : (
@@ -20,5 +20,5 @@ export const PublishedProducts = () => {
         <Link to="/sell" className="form-link">Publicá tu primer producto</Link>
       </div>
     )
-  )
-}
+  );
+};

@@ -10,18 +10,18 @@ export const LikedProducts = () => {
     <div className="latest-products-container">
       {
         user && (user.likedProducts.length === 0 ? (
-            <p>No hay productos guardados en favoritos</p>
-          ) : (
-            user.likedProducts.map(product => {
-              return (
-                <div className="latest-product">
-                  <Product product={product} key={product._id} />
-                </div>
-              );
-            })
-          )
+          <p>No hay productos guardados en favoritos</p>
+        ) : (
+          user.likedProducts.map(product => {
+            return (
+              <div key={product._id} className="latest-product">
+                <Product product={product} />
+              </div>
+            );
+          })
+        )
         )
       }
     </div>
-  )
-}
+  );
+};

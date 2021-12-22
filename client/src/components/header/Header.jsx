@@ -16,11 +16,11 @@ export const Header = ({ hambMenuState, cartState }) => {
 
   const handleShowHambMenu = () => {
     handleService.handleClick(setHambMenu);
-  }
+  };
 
   const handleShowCart = () => {
     handleService.handleClick(setCartContainer);
-  }
+  };
 
   return (
     <>
@@ -55,5 +55,5 @@ export const Header = ({ hambMenuState, cartState }) => {
       { cartContainer && <CartContainer />}
       { window.innerWidth <= 768 && <HambMenu hambMenu={hambMenu} />}
     </>
-  )
-}
+  );
+};

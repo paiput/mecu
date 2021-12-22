@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 // imports
 import { 
   BrowserRouter as Router,
@@ -44,9 +45,9 @@ const App = () => {
   }, []);
 
   const handleClickOutsideMenus = (e) => {
-    handleService.handleClickOutsideHambMenu(e, setHambMenu)
-    handleService.handleClickOutsideCartContainer(e, setCartContainer)
-  }
+    handleService.handleClickOutsideHambMenu(e, setHambMenu);
+    handleService.handleClickOutsideCartContainer(e, setCartContainer);
+  };
 
   return (
     <Router>
@@ -100,6 +101,6 @@ const App = () => {
       </div>
     </Router>
   );
-}
+};
 
 export default App;

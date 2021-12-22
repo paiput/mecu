@@ -5,5 +5,5 @@ export const LatestProduct = ({ product }) => {
     <div className="latest-product">
       <Product product={product} />
     </div>
-  )
-}
+  );
+};

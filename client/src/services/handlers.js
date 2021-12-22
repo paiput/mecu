@@ -1,13 +1,13 @@
 const handleClick = (setState) => {
   setState(prevValue => !prevValue);
-}
+};
 
 const handleClickOutsideHambMenu = (e, setHambMenu) => {
   const targetClasslist = e.target.classList;
   if (!targetClasslist.contains('nav__hamburger') && 
       !targetClasslist.contains('nav__hamburger-child')
-    ) setHambMenu(false);
-}
+  ) setHambMenu(false);
+};
 
 const handleClickOutsideCartContainer = (e, setCartContainer) => {
   const targetClasslist = e.target.classList;
@@ -15,12 +15,12 @@ const handleClickOutsideCartContainer = (e, setCartContainer) => {
       !e.target.parentElement.classList.contains('cart-button') &&
       !targetClasslist.contains('cart-container') &&
       !e.target.parentElement.classList.contains('cart-container')
-    ) setCartContainer(false);
-}
+  ) setCartContainer(false);
+};
 
 const numberWithCommas = (number) => {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
 
 const exportableFunctions = { 
   handleClick, 

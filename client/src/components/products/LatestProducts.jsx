@@ -12,5 +12,5 @@ export const LatestProducts = ({ products }) => {
         }
       </div>
     </div>
-  )
-}
+  );
+};

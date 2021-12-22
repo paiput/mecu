@@ -357,6 +357,13 @@ a {
   top: 50%;
   transform: translate(-125%, calc(-50% + 2px));
 }
+
+@media (min-width: 48rem) {
+  .form-container {
+    max-width: 30%;
+    min-width: 20rem;
+  }
+}
 /* /Form-Generals */
 
 /* Products-Generals */
@@ -649,6 +656,13 @@ a {
   padding: 0 .5em;
   width: 100%;
 }
+
+@media (min-width: 48rem) {
+  .balance-container {
+    max-width: 25%;
+    min-width: 20rem;
+  }
+}
 /* /User-Balance */
 
 /* Published-Products */
@@ -665,7 +679,7 @@ a {
 /* /Published-Products */
 
 /* Sell-Form */
-.sell-form-container {
+.sell-form {
   background-color: #FFF;
   padding: var(--spacing-1);
 }
@@ -696,6 +710,15 @@ a {
 .sell-form button {
   margin: 1.5em 0 0;
   width: 100%;
+}
+
+@media (min-width: 48rem) {
+  .sell-form-container {
+    display: grid;
+    height: calc(100vh - 64px);
+    margin-inline: auto;
+    place-items: center;
+  }
 }
 /* /Sell-Form */
 

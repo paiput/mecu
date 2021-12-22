@@ -11,17 +11,17 @@ const login = credentials => {
     success: res => `Hola, ${res.data}`
   });
   return request;
-}
+};
 
 const getLoggedUser = () => {
   const request = axios.get('/api/user');
   return request;
-}
+};
 
 const logout = () => {
   const request = axios.get('/api/logout');
   return request;
-}
+};
 
 const exportableFunctions = { login, getLoggedUser, logout };
 

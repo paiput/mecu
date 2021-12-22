@@ -14,41 +14,41 @@ export const SellForm = () => {
 
   const filterBadInputs = (e) => {
     let inputValue = e.currentTarget.value;
-    if (inputValue.includes("  ")) {
-      inputValue = inputValue.replace(/\s\s/g, " ");
+    if (inputValue.includes('  ')) {
+      inputValue = inputValue.replace(/\s\s/g, ' ');
     }
-    if (inputValue.includes(" ")) {
-      inputValue = inputValue.replace(/^\s/g, "");
+    if (inputValue.includes(' ')) {
+      inputValue = inputValue.replace(/^\s/g, '');
     }
-    if (inputValue.includes("\n")) {
-      inputValue = inputValue.replace(/\n\n\n/g, "\n");
-      inputValue = inputValue.replace(/^\n/g, "");
+    if (inputValue.includes('\n')) {
+      inputValue = inputValue.replace(/\n\n\n/g, '\n');
+      inputValue = inputValue.replace(/^\n/g, '');
     }
-  }
+  };
 
   // filtra caracteres que no sean numeros
   const filterNotNumbers = (e) => {
     if (e.which < 48 || e.which > 57) e.preventDefault();
-  }
+  };
 
   const handleFileInputChange = (e) => {
     const file = e.target.files[0];
     previewFile(file);
     setFileInputState(e.target.value);
-  }
+  };
 
   const previewFile = (file) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       setPreviewSource(reader.result);
-    }
-  }
+    };
+  };
 
   const onSubmit = data => {
-    if (previewSource) data = {...data, img: previewSource }
+    if (previewSource) data = {...data, img: previewSource };
     console.log('data:', data);
-    const product = {...data, username: loggedUser.username}
+    const product = {...data, username: loggedUser.username};
     productService.postProduct(product)
       .then(product => {
         console.log('Product published:', product);
@@ -57,13 +57,13 @@ export const SellForm = () => {
             ...user, 
             products: [...user.products, product],
             likedProducts: user.likedProducts, 
-          } 
+          }; 
         });
       });
     setPreviewSource('');
     setFileInputState('');
     reset();
-  }
+  };
 
   return (
     <div className="sell-form-container">
@@ -76,7 +76,7 @@ export const SellForm = () => {
             type="text"
             id="input__product-name"
             onKeyPress={filterBadInputs}
-            {...register("name", { 
+            {...register('name', { 
               required: true, 
               minLength: 4, 
               maxLength: 35
@@ -103,7 +103,7 @@ export const SellForm = () => {
             className="form-container__input"
             id="input__product-description"
             onKeyPress={filterBadInputs}
-            {...register("description", { 
+            {...register('description', { 
               required: true, 
               minLength: 25, 
               maxLength: 750 
@@ -121,7 +121,7 @@ export const SellForm = () => {
               type="number"
               id="input__product-price"
               onKeyPress={filterNotNumbers}
-              {...register("price", { 
+              {...register('price', { 
                 required: true,
                 min: 1, 
                 max: 9999999
@@ -139,7 +139,7 @@ export const SellForm = () => {
             type="number"
             id="input__product-quantity"
             onKeyPress={filterNotNumbers}
-            {...register("quantity", { 
+            {...register('quantity', { 
               required: true, 
               min: 1, 
               max: 10000 
@@ -152,5 +152,5 @@ export const SellForm = () => {
         <button className="text-button primary-button" type="submit">Publicar</button>
       </form>
     </div>
-  )
-}
+  );
+};

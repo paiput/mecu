@@ -11,13 +11,13 @@ const register = credentials => {
     success: res => `Bienvenid@, ${res.data.username}!`
   });
   return request;
-}
+};
 
 const deleteAccount = credentials => {
   const { _id: userId } = credentials;
   const request = axios.delete(`${baseUrl}/${userId}`, credentials);
   return request;
-}
+};
 
 const exportableFunctions = { register, deleteAccount };
 

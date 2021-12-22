@@ -4,5 +4,5 @@ export const CartProduct = ({ product }) => {
       <h4>{product.name}</h4>
       <p>${product.price}</p>
     </div>
-  )
-}
+  );
+};

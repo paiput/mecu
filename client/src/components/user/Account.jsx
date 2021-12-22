@@ -18,21 +18,21 @@ export const Account = () => {
 
   const handleLogout = () => {
     loginService.logout()
-      .then(res => {
+      .then(() => {
         toast(`Hasta pronto, ${user.name}`, { icon: '👋' });
         setUser(null);
       });
     history.replace('/');
-  }
+  };
 
   const handleDeleteAccount = () => {
     registerService.deleteAccount(user)
-      .then(res => {
-        toast(`Cuenta borrada exitosamente`, { icon: '👌' });
+      .then(() => {
+        toast('Cuenta borrada exitosamente', { icon: '👌' });
         history.replace('/');
         setUser(null);
       });
-  }
+  };
 
   if (!user) return 'Cargando...'; // hacer esqueleto
 
@@ -42,7 +42,7 @@ export const Account = () => {
         <div className="user__img-container">
           <img 
             src={user && `https://avatars.dicebear.com/api/initials/${user.name}-${user.surname}.svg`}
-            onError={(e) => {e.target.onerror = null; e.target.src=`${userImg}`}}
+            onError={(e) => {e.target.onerror = null; e.target.src=`${userImg}`;}}
             alt="perfil de usuario" 
             className="user__img" 
           />
@@ -68,5 +68,5 @@ export const Account = () => {
         <button className="text-button primary-danger-button" onClick={handleDeleteAccount}>Borrar cuenta</button>
       </div>
     </div>
-  )
-}
+  );
+};

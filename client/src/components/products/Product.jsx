@@ -28,26 +28,26 @@ export const Product = ({ product }) => {
         icon: '🔑',
       });
     }
-  }
+  };
 
   const handleLike = () => {
     if (user) {
       userService.handleProductLike(user.username, product)
         .then(updatedLikedProducts => {
           setUser(userData => {
-            return {...userData, likedProducts: updatedLikedProducts} 
-          })
+            return {...userData, likedProducts: updatedLikedProducts}; 
+          });
         })
         .catch(err => {
           console.log('Error while liking product', err);
-        })
+        });
     }
     else {
       toast('Iniciá sesión para guardar productos en favoritos', {
         icon: '🔑',
       });
     }
-  }
+  };
 
   return (
     <>
@@ -80,5 +80,5 @@ export const Product = ({ product }) => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};

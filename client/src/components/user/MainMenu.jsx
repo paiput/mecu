@@ -1,6 +1,6 @@
 // imports
-import { useState, useEffect, useContext } from "react";
-import { UserContext } from "../../contexts/UserContext";
+import { useState, useEffect, useContext } from 'react';
+import { UserContext } from '../../contexts/UserContext';
 import productService from '../../services/products';
 // components
 import { FeaturedProduct } from '../products/FeaturedProduct';
@@ -20,10 +20,10 @@ export const MainMenu = () => {
         console.log('Products fetched');
 
         if (user) {
-          console.log(user.username)
+          console.log(user.username);
           const filteredProducts = fetchedProducts.filter(product => product.user.username !== user.username);
           setProducts(filteredProducts);
-          setRandomProduct(filteredProducts[Math.floor(Math.random() * filteredProducts.length)])
+          setRandomProduct(filteredProducts[Math.floor(Math.random() * filteredProducts.length)]);
         } 
         else {
           setProducts(fetchedProducts);
@@ -34,10 +34,9 @@ export const MainMenu = () => {
       });
   // el useEffect se ejecuta cada vez que se loguee un usuario o cierre sesión
   // el comentario de abajo es para desactivar una advertencia del eslint
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.username]); 
 
-  document.title = "Mecu";
+  document.title = 'Mecu';
   
   return (
     loading ? (
@@ -50,5 +49,5 @@ export const MainMenu = () => {
         <LatestProducts products={products} />
       </>
     )
-  )
-}
+  );
+};

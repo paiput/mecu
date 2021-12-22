@@ -1,6 +1,6 @@
-import { useContext } from "react";
-import { UserContext } from "../../contexts/UserContext";
-import { Product } from "../products/Product";
+import { useContext } from 'react';
+import { UserContext } from '../../contexts/UserContext';
+import { Product } from '../products/Product';
 
 export const PurchasedProducts = () => {
   const { user } = useContext(UserContext);
@@ -8,12 +8,12 @@ export const PurchasedProducts = () => {
   return (
     <div>
       {user.purchasedProducts.map(product => {
-          return (
-            <div className="latest-product">
-              <Product product={product} key={product._id} />
-            </div>
-          )
-        })}
+        return (
+          <div key={product._id} className="latest-product">
+            <Product product={product} />
+          </div>
+        );
+      })}
     </div>
-  )
-}
+  );
+};

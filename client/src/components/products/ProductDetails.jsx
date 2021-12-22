@@ -24,13 +24,13 @@ export const ProductDetails = () => {
 
   useEffect(() => {
     productService.getProduct(id)
-    .then(fetchedProduct => {
-      setProduct(fetchedProduct);
-      setLoading(false);
-      document.title = fetchedProduct.name
-      window.scrollTo(0, 0); // scrollea hacia arriba para que se vea el producto seleccionado
-      console.log('fetched product:', fetchedProduct)
-    });
+      .then(fetchedProduct => {
+        setProduct(fetchedProduct);
+        setLoading(false);
+        document.title = fetchedProduct.name;
+        window.scrollTo(0, 0); // scrollea hacia arriba para que se vea el producto seleccionado
+        console.log('fetched product:', fetchedProduct);
+      });
   }, [id, user?.balance]);
 
   const handleCartClick = () => {
@@ -47,26 +47,26 @@ export const ProductDetails = () => {
         icon: '🔑',
       });
     }
-  }
+  };
 
   const handleLike = () => {
     if (user) {
       userService.handleProductLike(user.username, product)
         .then(updatedLikedProducts => {
           setUser(userData => {
-            return {...userData, likedProducts: updatedLikedProducts} 
-          })
+            return {...userData, likedProducts: updatedLikedProducts}; 
+          });
         })
         .catch(err => {
           console.log('Error while liking product', err);
-        })
+        });
     }
     else {
       toast('Iniciá sesión para guardar productos en favoritos', {
         icon: '🔑',
       });
     }
-  }
+  };
 
   const handleBuyNow = () => {
     if (user) setBuyNow(true);
@@ -75,7 +75,7 @@ export const ProductDetails = () => {
         icon: '🔑',
       });
     }
-  }
+  };
 
   const renderProductDetails = () => {
     return (
@@ -110,23 +110,23 @@ export const ProductDetails = () => {
                 </button>
                 <button className="product-details__button text-button secondary-button" onClick={handleCartClick}>
                   {cart.includes(product) 
-                    ? "Quitar del carrito"
-                    : "Agregar al carrito"}
+                    ? 'Quitar del carrito'
+                    : 'Agregar al carrito'}
                 </button>
               </>
             ) : (
               <button className="text-button" disabled="true">La publicación está pausada</button>
-              )}
+            )}
           </div>
         </div>
         <RelatedProducts user={product.user.username} />
         {buyNow && <BuyNow setBuyNow={setBuyNow} product={product} />}
       </>
-    )
-  }
+    );
+  };
   return (
     loading
       ? <p>Cargando producto...</p>
       : renderProductDetails()
-  )
-}
+  );
+};
